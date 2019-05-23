@@ -1,0 +1,37 @@
+#!/bin/bash
+# TODO: Setting return errors
+
+
+function ask_reboot(){
+  echo "##### Finished"
+  echo "Do you want to reboot now? (y/N)"
+  read -r reboot_option
+  if [[ $reboot_option = "y" ]]; then
+    reboot
+  else
+    echo "All done!"
+  fi
+}
+
+function check_root(){
+  if [[ $EUID -ne 0 ]]; then
+    echo "This script must be run as root"
+    exit 1
+  fi
+}
+
+function main(){
+  if [[ $EUID -ne 0 ]]; then
+    echo "This script must be run as root"
+    exit 1
+  fi
+  printf "\n### Initiating\n"
+  source scripts/setup_themes.sh
+  source scripts/dot_files.sh
+  source scripts/install_mega.sh
+  source scripts/install_packages.sh
+  source scripts/install_pia.sh
+  ask_reboot
+}
+
+main
