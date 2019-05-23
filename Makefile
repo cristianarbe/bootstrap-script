@@ -10,7 +10,7 @@ function output(){
 }
 
 function main(){
-	if [[ "$1" == "make" ]]; then
+	if [[ "$1" == "" ]]; then
 		[[ -f bootstrap.sh ]] && rm bootstrap.sh
 		output > bootstrap.sh
 		if [[ -f bootstrap.sh ]]; then
