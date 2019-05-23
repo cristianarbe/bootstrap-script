@@ -10,12 +10,12 @@ function output(){
 }
 
 function main(){
-		[[ -f ~/bootstrap.sh ]] && rm ~/bootstrap.sh
+		[[ -f bootstrap.sh ]] && rm bootstrap.sh
 		output > bootstrap.sh
-		if [[ -f "bootstrap.sh" ]]; then
+		if [[ -f bootstrap.sh ]]; then
 				echo "Built successfully"
 		else
-				echo "failed"
+				echo failed
 		fi
 }
 
