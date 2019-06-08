@@ -1,7 +1,4 @@
 *google*cjk*
-VirtualBox
-VirtualBox-server
-Zim
 asunder
 catfish
 dnfdragora
@@ -13,7 +10,6 @@ geany
 geolite2-city
 gimp
 gnome-control-center
-google-chrome-stable
 google-noto-serif-cjk-ttc-fonts
 java-11-openjdk-headless
 leafpad
