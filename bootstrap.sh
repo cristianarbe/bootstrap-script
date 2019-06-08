@@ -1,5 +1,4 @@
 #!/bin/bash
-# TODO: Setting return errors
 
 if [[ $EUID -ne 0 ]]; then
   echo "This script must be run as root"
@@ -8,7 +7,7 @@ fi
 readonly REPO="https://github.com/cristianarbe/dot-files.git"
 readonly PIA_EXISTS=$(find /etc/openvpn/ -name "pia*" | wc -l)
 readonly PIA_URL="https://www.privateinternetaccess.com/installer/pia-nm.sh"
-readonly MEGASYNC_URL="https://mega.nz/linux/MEGAsync/Fedora_29/x86_64/megasync-Fedora_29.x86_64.rpm"
+readonly MEGASYNC_URL="https://mega.nz/linux/MEGAsync/Fedora_30/x86_64/megasync-Fedora_30.x86_64.rpm"
 
 dot_files(){
   if [[ -f /home/${SUDO_USER}/README.md ]]; then
