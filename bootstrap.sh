@@ -3,9 +3,7 @@
 set -e
 mkdir -p /var/log/bootstrap
 readonly LOG="/var/log/bootstrap/bootstrap.log"
-echo "" >> $LOG
-date >> $LOG
-echo "" >> $LOG
+{ echo ""; date; echo ""; } >> $LOG
 
 if [[ $EUID -ne 0 ]]; then
   echo "This script must be run as root"
@@ -36,10 +34,12 @@ dot_files(){
 install_dnf(){
   echo "Installing dnf packages..."
   install_packages=$(cat config/install_packages.txt)
+  # shellcheck disable=SC2086
   dnf install $install_packages -y --skip-broken >> $LOG
 
   echo "Uninstalling dnf packages..."
   uninstall_packages=$(cat config/uninstall_packages.txt)
+  # shellcheck disable=SC2086
   dnf remove $uninstall_packages -y --skip-broken >> $LOG
 
   echo "Upgrading..."
@@ -81,9 +81,9 @@ extra_packages(){
   if [[ -d /usr/share/themes/waldorf1314 ]]; then
     echo "Waldorf theme is already installed"
   else
-    wget 'https://dl.opendesktop.org/api/files/download/id/1460968153/s/630a5ea1c93c05cefad04f3c4fd89059f9ef6112b2d50f27ed217a6a9464a439c2f91480327da21eb5c9954f4d4a1c3172d43510103b96d00752b60b42197ac4/t/1560079934/lt/download/162986-waldorf1314.tar.xz' >> $LOG
-    tar xf 162986-waldorf1314.tar.xz >> $LOG
-    cp waldorf1314 /usr/share/themes/ -vr >> $LOG
+		  { wget 'https://dl.opendesktop.org/api/files/download/id/1460968153/s/630a5ea1c93c05cefad04f3c4fd89059f9ef6112b2d50f27ed217a6a9464a439c2f91480327da21eb5c9954f4d4a1c3172d43510103b96d00752b60b42197ac4/t/1560079934/lt/download/162986-waldorf1314.tar.xz';
+    tar xf 162986-waldorf1314.tar.xz;
+    cp waldorf1314 /usr/share/themes/ -vri; } >> $LOG
   fi
 
  # Install duplicati
@@ -99,17 +99,11 @@ extra_packages(){
  if [[ -f /bin/vlc ]]; then
    echo "VLC is already installed"
  else
-   dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm -y
-   dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm -y
+   dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm -y
+   dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm -y
    dnf install vlc -y
  fi
 }
-
-setup_openbox(){
-  dnf install openbox xbacklight feh xorg-x11-drv-libinput tint2 \
-    volumeicon xorg-x11-server-utils network-manager-applet -y >> $LOG
-  }
-
 
 function main(){
 
@@ -124,17 +118,7 @@ function main(){
   fi
 
   echo ""
-  echo "2. Setup openbox"
-  echo "================"
-  echo ""
-  echo "This sets up openbox"
-  read -rp "Do you want to proceed? [y/N]: " response
-  if [[ $response == "y" ]]; then
-    setup_openbox
-  fi
-
-  echo ""
-  echo "3. Packages install"
+  echo "2. Packages install"
   echo "==================="
   echo ""
   echo "This installs the packages that I use"
@@ -144,7 +128,7 @@ function main(){
   fi
 
   echo ""
-  echo "4. Extra packages"
+  echo "3. Extra packages"
   echo "================="
   echo ""
   echo "This installs packages that are not in dnf. This includes PIA, \
@@ -156,7 +140,7 @@ function main(){
   fi
 
   echo ""
-  echo "5. Installation finished"
+  echo "4. Installation finished"
   echo "========================"
   echo ""
   echo "This step will reboot the system"
