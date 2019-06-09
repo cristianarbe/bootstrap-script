@@ -72,7 +72,8 @@ setup_openbox(){
 
   function main(){
 
-    clear
+    
+    echo ""
     echo "1. Dot files install"
     echo "===================="
     echo ""
@@ -82,7 +83,7 @@ setup_openbox(){
       dot_files
     fi
 
-    clear
+    echo ""
     echo "2. Setup openbox"
     echo "===================="
     echo ""
