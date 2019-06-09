@@ -57,6 +57,7 @@ extra_packes(){
     local file
     file=$(find . -name "megasync-Fedora*")
     dnf install "$file"
+  fi
 
     wget 'https://dl.opendesktop.org/api/files/download/id/1460968153/s/630a5ea1c93c05cefad04f3c4fd89059f9ef6112b2d50f27ed217a6a9464a439c2f91480327da21eb5c9954f4d4a1c3172d43510103b96d00752b60b42197ac4/t/1560079934/lt/download/162986-waldorf1314.tar.xz'
     tar xf 162986-waldorf1314.tar.xz
