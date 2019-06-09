@@ -57,53 +57,73 @@ extra_packes(){
     local file
     file=$(find . -name "megasync-Fedora*")
     dnf install "$file"
-  fi
-}
 
-function main(){
+    wget 'https://dl.opendesktop.org/api/files/download/id/1460968153/s/630a5ea1c93c05cefad04f3c4fd89059f9ef6112b2d50f27ed217a6a9464a439c2f91480327da21eb5c9954f4d4a1c3172d43510103b96d00752b60b42197ac4/t/1560079934/lt/download/162986-waldorf1314.tar.xz'
+    tar xf 162986-waldorf1314.tar.xz
+    cp waldorf1314 /usr/share/themes/ -r
+  }
 
-  clear
-  echo "1. Dot files install"
-  echo "===================="
-  echo ""
-  echo "This installs my personal dot files"
-  read -rp "Do you want to proceed? [y/N]: " response
-  if [[ $response == "y" ]]; then
-    dot_files
-  fi
-
-  echo ""
-  echo "2. Packages install"
-  echo "==================="
-  echo ""
-  echo "This installs the packages that I use"
-  read -rp "Do you want to proceed? [y/N]: " response
-  if [[ $response == "y" ]]; then
-    install_dnf
-  fi
-
-  echo ""
-  echo "3. Extra packages"
-  echo "===================="
-  echo ""
-  echo "This installs packages that are not in dnf. This includes PIA, \
-    MegaSync and vim plug"
-      read -rp "Do you want to proceed? [y/N]: " response
-      if [[ $response == "y" ]]; then
-        extra_packages
-      fi
-
-      echo ""
-      echo "4. Installation finished"
-      echo "================="
-      echo ""
-      echo "This step will reboot the system"
-      read -rp "Do you want to proceed? [y/N]: " response
-      if [[ $response = "y" ]]; then
-        reboot
-      else
-        echo "All done!"
-      fi
+setup_openbox(){
+  dnf install openbox xbacklight feh xorg-x11-drv-libinput tint2 \
+    volumeicon xorg-x11-server-utils network-manager-applet
     }
 
-  main
+
+  function main(){
+
+    clear
+    echo "1. Dot files install"
+    echo "===================="
+    echo ""
+    echo "This installs my personal dot files"
+    read -rp "Do you want to proceed? [y/N]: " response
+    if [[ $response == "y" ]]; then
+      dot_files
+    fi
+
+    clear
+    echo "2. Setup openbox"
+    echo "===================="
+    echo ""
+    echo "This sets up openbox"
+    read -rp "Do you want to proceed? [y/N]: " response
+    if [[ $response == "y" ]]; then
+      setup_openbox
+    fi
+
+    echo ""
+    echo "3. Packages install"
+    echo "==================="
+    echo ""
+    echo "This installs the packages that I use"
+    read -rp "Do you want to proceed? [y/N]: " response
+    if [[ $response == "y" ]]; then
+      install_dnf
+    fi
+
+    echo ""
+    echo "4. Extra packages"
+    echo "===================="
+    echo ""
+    echo "This installs packages that are not in dnf. This includes PIA, \
+      MegaSync and vim plug"
+
+    read -rp "Do you want to proceed? [y/N]: " response
+    if [[ $response == "y" ]]; then
+      extra_packages
+    fi
+
+    echo ""
+    echo "5. Installation finished"
+    echo "================="
+    echo ""
+    echo "This step will reboot the system"
+    read -rp "Do you want to proceed? [y/N]: " response
+    if [[ $response = "y" ]]; then
+      reboot
+    else
+      echo "All done!"
+    fi
+  }
+
+main
