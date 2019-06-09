@@ -21,7 +21,7 @@ dot_files(){
   if [[ -f /home/${SUDO_USER}/README.md ]]; then
     echo "Dot files are already set"
   else
-    echo "###### Setting up dot files"
+    echo "Setting up dot files..."
     [[ -d /tmp/dot-files ]] && rm -rfv /tmp/dot-files >> $LOG
     cd  /tmp/ || exit
     git clone "$REPO" >> $LOG
@@ -34,12 +34,12 @@ dot_files(){
 }
 
 install_dnf(){
-  echo "###### Installing dnf packages"
+  echo "Installing dnf packages..."
   install_packages=$(cat config/install_packages.txt)
-  dnf install $install_packages -y >> $LOG
+  dnf install $install_packages -y --skip-broken >> $LOG
 
-  uninstall_packages=$(cat "config/uninstall_packages.txt")
-  dnf remove $uninstall_packages -y >> $LOG
+  uninstall_packages=$(cat config/uninstall_packages.txt)
+  dnf remove $uninstall_packages -y --skip-broken >> $LOG
 
   dnf upgrade -y >> $LOG
 }
@@ -48,7 +48,7 @@ extra_packages(){
   # Install PIA
   if [[ $PIA_EXISTS -eq 0 ]]; then
     cd /tmp/ || exit
-    echo "###### Installing PIA"
+    echo "Installing PIA..."
     wget "$PIA_URL" >> $LOG
     bash pia-nm.sh
   else
@@ -68,7 +68,7 @@ extra_packages(){
   if [[ -f /bin/megasync ]]; then
     echo "MEGASync is already installed"
   else
-    echo "##### Installing MEGASync"
+    echo "Installing MEGASync..."
     wget $MEGASYNC_URL >> $LOG
     local file
     file=$(find . -name "megasync-Fedora*")
