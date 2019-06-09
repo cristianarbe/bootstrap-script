@@ -10,7 +10,6 @@ geany
 geolite2-city
 gimp
 gnome-control-center
-*cjk*
 java-11-openjdk-headless
 leafpad
 libreoffice
