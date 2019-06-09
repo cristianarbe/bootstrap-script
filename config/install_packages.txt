@@ -12,7 +12,6 @@ libXScrnSaver
 mono-winforms
 nodejs
 obconf
-obkey
 openbox
 pandoc
 pcmanfm
