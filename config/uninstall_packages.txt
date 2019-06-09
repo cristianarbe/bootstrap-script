@@ -10,7 +10,7 @@ geany
 geolite2-city
 gimp
 gnome-control-center
-google-noto-serif-cjk-ttc-fonts
+*cjk*
 java-11-openjdk-headless
 leafpad
 libreoffice

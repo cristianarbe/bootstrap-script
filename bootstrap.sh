@@ -56,8 +56,12 @@ extra_packages(){
   fi
 
   # Install vim plug
-  curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim >> $LOG
+  if [[ -f ~/.vim/autoload/plug.vim ]]; then
+    echo "Vim plug is already installed"
+  else
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim >> $LOG
+  fi
 
   # Install megasync
   cd /tmp/ || exit
