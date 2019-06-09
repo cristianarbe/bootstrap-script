@@ -76,13 +76,13 @@ extra_packages(){
 
 	# Install duplicati
 	cd /tmp/ || exit
-	wget 'https://updates.duplicati.com/beta/duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm'
-    dnf install ./duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm
+	wget 'https://updates.duplicati.com/beta/duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm' >> log
+    dnf install ./duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm -y
 
 	# Install VLC
-	dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-	dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-	dnf install vlc
+	dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm -y
+	dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm -y
+	dnf install vlc -y
   }
 
 setup_openbox(){
