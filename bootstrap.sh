@@ -1,7 +1,9 @@
 #!/bin/bash -x
 
 set -e
-[[ -f log ]] && rm log
+echo "" >> log
+date >> log
+echo "" >> log
 
 if [[ $EUID -ne 0 ]]; then
   echo "This script must be run as root"
@@ -31,8 +33,8 @@ dot_files(){
 
 install_dnf(){
   echo "###### Installing dnf packages"
-  install_packages=$(cat "config/install_packages.txt")
-  dnf install "$install_packages" -y
+  install_packages=$(cat config/install_packages.txt)
+  dnf install $install_packages -y
 
   uninstall_packages=$(cat "config/uninstall_packages.txt")
   dnf remove "$uninstall_packages" -y
