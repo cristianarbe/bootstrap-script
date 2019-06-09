@@ -1,6 +1,7 @@
 ShellCheck
 abiword
 claws-mail
+dmenu
 firefox
 git
 golang
