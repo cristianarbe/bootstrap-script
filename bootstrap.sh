@@ -20,7 +20,7 @@ dot_files(){
     echo "Dot files are already set"
   else
     echo "###### Setting up dot files"
-	[[ -d /tmp/dot-files ]] && rm -rfv /tmp/dot-files >> log
+    [[ -d /tmp/dot-files ]] && rm -rfv /tmp/dot-files >> log
     cd  /tmp/ || exit
     git clone "$REPO" >> log
     cd dot-files || exit
@@ -70,86 +70,94 @@ extra_packages(){
   fi
 
   # Install waldorf theme
+  if [[ -d /usr/share/themes/waldorf1314 ]]; then
+    echo "Waldorf theme is already installed"
+  else
     wget 'https://dl.opendesktop.org/api/files/download/id/1460968153/s/630a5ea1c93c05cefad04f3c4fd89059f9ef6112b2d50f27ed217a6a9464a439c2f91480327da21eb5c9954f4d4a1c3172d43510103b96d00752b60b42197ac4/t/1560079934/lt/download/162986-waldorf1314.tar.xz' >> log
     tar xf 162986-waldorf1314.tar.xz >> log
     cp waldorf1314 /usr/share/themes/ -vr >> log
+  fi
 
-	# Install duplicati
-	if [[ -f  /bin/duplicati ]]; then
-      echo "Duplicaty is already installed"
-    else
-      cd /tmp/ || exit
-	  wget 'https://updates.duplicati.com/beta/duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm' >> log
-      dnf install ./duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm -y
-	fi
+ # Install duplicati
+ if [[ -f  /bin/duplicati ]]; then
+   echo "Duplicaty is already installed"
+ else
+   cd /tmp/ || exit
+   wget 'https://updates.duplicati.com/beta/duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm' >> log
+   dnf install ./duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm -y
+ fi
 
-	# Install VLC
-	dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm -y
-	dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm -y
-	dnf install vlc -y
-  }
+ # Install VLC
+ if [[ -f /bin/vlc ]]; then
+   echo "VLC is already installed"
+ else
+   dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm -y
+   dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm -y
+   dnf install vlc -y
+ fi
+}
 
 setup_openbox(){
   dnf install openbox xbacklight feh xorg-x11-drv-libinput tint2 \
     volumeicon xorg-x11-server-utils network-manager-applet -y
-    }
-
-
-  function main(){
-
-    echo ""
-    echo "1. Dot files install"
-    echo "===================="
-    echo ""
-    echo "This installs my personal dot files"
-    read -rp "Do you want to proceed? [y/N]: " response
-    if [[ $response == "y" ]]; then
-      dot_files
-    fi
-
-    echo ""
-    echo "2. Setup openbox"
-    echo "================"
-    echo ""
-    echo "This sets up openbox"
-    read -rp "Do you want to proceed? [y/N]: " response
-    if [[ $response == "y" ]]; then
-      setup_openbox
-    fi
-
-    echo ""
-    echo "3. Packages install"
-    echo "==================="
-    echo ""
-    echo "This installs the packages that I use"
-    read -rp "Do you want to proceed? [y/N]: " response
-    if [[ $response == "y" ]]; then
-      install_dnf
-    fi
-
-    echo ""
-    echo "4. Extra packages"
-    echo "================="
-    echo ""
-    echo "This installs packages that are not in dnf. This includes PIA, \
-MegaSync and vim plug"
-
-    read -rp "Do you want to proceed? [y/N]: " response
-    if [[ $response == "y" ]]; then
-      extra_packages
-    fi
-
-    echo ""
-    echo "5. Installation finished"
-    echo "========================"
-    echo ""
-    echo "This step will reboot the system"
-    read -rp "Do you want to proceed? [y/N]: " response
-    if [[ $response = "y" ]]; then
-      reboot
-    else
-      echo "All done!"
-    fi
   }
+
+
+function main(){
+
+  echo ""
+  echo "1. Dot files install"
+  echo "===================="
+  echo ""
+  echo "This installs my personal dot files"
+  read -rp "Do you want to proceed? [y/N]: " response
+  if [[ $response == "y" ]]; then
+    dot_files
+  fi
+
+  echo ""
+  echo "2. Setup openbox"
+  echo "================"
+  echo ""
+  echo "This sets up openbox"
+  read -rp "Do you want to proceed? [y/N]: " response
+  if [[ $response == "y" ]]; then
+    setup_openbox
+  fi
+
+  echo ""
+  echo "3. Packages install"
+  echo "==================="
+  echo ""
+  echo "This installs the packages that I use"
+  read -rp "Do you want to proceed? [y/N]: " response
+  if [[ $response == "y" ]]; then
+    install_dnf
+  fi
+
+  echo ""
+  echo "4. Extra packages"
+  echo "================="
+  echo ""
+  echo "This installs packages that are not in dnf. This includes PIA, \
+    MegaSync and vim plug"
+
+  read -rp "Do you want to proceed? [y/N]: " response
+  if [[ $response == "y" ]]; then
+    extra_packages
+  fi
+
+  echo ""
+  echo "5. Installation finished"
+  echo "========================"
+  echo ""
+  echo "This step will reboot the system"
+  read -rp "Do you want to proceed? [y/N]: " response
+  if [[ $response = "y" ]]; then
+    reboot
+  else
+    echo "All done!"
+  fi
+}
 
 main
