@@ -1,31 +1,31 @@
-ShellCheck \
-abiword \
-claws-mail \
-duplicati \
-ffmpeg \
-firefox \
-git \
-golang \
-gparted \
-highlight \
-keepass \
-levien-inconsolata-fonts \
-libXScrnSaver \
-mono-winforms \
-nodejs \
-obconf \
-obkey \
-openbox \
-pandoc \
-pcmanfm \
-qbittorrent \
-qdirstat \
-simple-mtpfs \
-slock \
-tint2 \
-vim \
-vlc \
-xterm \
-youtube-dl \
-zathura \
+ShellCheck
+abiword
+claws-mail
+duplicati
+ffmpeg
+firefox
+git
+golang
+gparted
+highlight
+keepass
+levien-inconsolata-fonts
+libXScrnSaver
+mono-winforms
+nodejs
+obconf
+obkey
+openbox
+pandoc
+pcmanfm
+qbittorrent
+qdirstat
+simple-mtpfs
+slock
+tint2
+vim
+vlc
+xterm
+youtube-dl
+zathura
 zathura-pdf-mupdf
