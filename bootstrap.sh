@@ -38,9 +38,11 @@ install_dnf(){
   install_packages=$(cat config/install_packages.txt)
   dnf install $install_packages -y --skip-broken >> $LOG
 
+  echo "Uninstalling dnf packages..."
   uninstall_packages=$(cat config/uninstall_packages.txt)
   dnf remove $uninstall_packages -y --skip-broken >> $LOG
 
+  echo "Upgrading..."
   dnf upgrade -y >> $LOG
 }
 
@@ -105,7 +107,7 @@ extra_packages(){
 
 setup_openbox(){
   dnf install openbox xbacklight feh xorg-x11-drv-libinput tint2 \
-    volumeicon xorg-x11-server-utils network-manager-applet -y
+    volumeicon xorg-x11-server-utils network-manager-applet -y >> $LOG
   }
 
 
