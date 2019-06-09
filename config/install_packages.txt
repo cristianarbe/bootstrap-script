@@ -3,6 +3,7 @@ abiword
 claws-mail
 duplicati
 ffmpeg
+firefox
 git
 golang
 gparted
