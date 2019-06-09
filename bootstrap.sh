@@ -37,7 +37,7 @@ install_dnf(){
   dnf install $install_packages -y
 
   uninstall_packages=$(cat "config/uninstall_packages.txt")
-  dnf remove "$uninstall_packages" -y
+  dnf remove $uninstall_packages -y
 
   dnf upgrade -y
 }
