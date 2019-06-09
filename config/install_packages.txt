@@ -1,8 +1,6 @@
 ShellCheck
 abiword
 claws-mail
-duplicati
-ffmpeg
 firefox
 git
 golang
@@ -24,7 +22,6 @@ simple-mtpfs
 slock
 tint2
 vim
-vlc
 xterm
 youtube-dl
 zathura

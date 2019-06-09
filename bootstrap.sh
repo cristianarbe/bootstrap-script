@@ -43,6 +43,7 @@ install_dnf(){
 }
 
 extra_packages(){
+  # Install PIA
   if [[ $PIA_EXISTS -eq 0 ]]; then
     cd /tmp/ || exit
     echo "###### Installing PIA"
@@ -52,9 +53,11 @@ extra_packages(){
     echo "PIA is already installed"
   fi
 
+  # Install vim plug
   curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim >> log
 
+  # Install megasync
   cd /tmp/ || exit
   if [[ -f /bin/megasync ]]; then
     echo "MEGASync is already installed"
@@ -66,9 +69,20 @@ extra_packages(){
     dnf install "$file" -y
   fi
 
+  # Install waldorf theme
     wget 'https://dl.opendesktop.org/api/files/download/id/1460968153/s/630a5ea1c93c05cefad04f3c4fd89059f9ef6112b2d50f27ed217a6a9464a439c2f91480327da21eb5c9954f4d4a1c3172d43510103b96d00752b60b42197ac4/t/1560079934/lt/download/162986-waldorf1314.tar.xz' >> log
     tar xf 162986-waldorf1314.tar.xz >> log
     cp waldorf1314 /usr/share/themes/ -vr >> log
+
+	# Install duplicati
+	cd /tmp/ || exit
+	wget 'https://updates.duplicati.com/beta/duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm'
+    dnf install ./duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm
+
+	# Install VLC
+	dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+	dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+	dnf install vlc
   }
 
 setup_openbox(){
