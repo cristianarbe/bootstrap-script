@@ -1,5 +1,6 @@
 #!/bin/bash -x
 
+set -e
 [[ -f log ]] && rm log
 
 if [[ $EUID -ne 0 ]]; then
@@ -17,6 +18,7 @@ dot_files(){
     echo "Dot files are already set"
   else
     echo "###### Setting up dot files"
+	[[ -d /tmp/dot-files ]] && rm -rfv /tmp/dot-files >> log
     cd  /tmp/ || exit
     git clone "$REPO" >> log
     cd dot-files || exit
