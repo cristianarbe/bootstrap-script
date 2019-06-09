@@ -11,7 +11,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 readonly REPO="https://github.com/cristianarbe/dot-files.git"
-readonly PIA_EXISTS=$(find /etc/openvpn/ -name "pia*" | wc -l)
+readonly PIA_EXISTS=$(find /etc/openvpn/ -name "pia*" 2> /dev/null | wc -l)
 readonly PIA_URL="https://www.privateinternetaccess.com/installer/pia-nm.sh"
 readonly MEGASYNC_URL="https://mega.nz/linux/MEGAsync/Fedora_30/x86_64/megasync-Fedora_30.x86_64.rpm"
 
@@ -25,7 +25,7 @@ dot_files(){
     git clone "$REPO" >> $LOG
     cd dot-files || exit
     shopt -s dotglob
-    mv -v /tmp/dot-files/* "/home/${SUDO_USER}/" >> $LOG
+    cp -rv /tmp/dot-files/* "/home/${SUDO_USER}/" >> $LOG
   fi
   mkdir -vp /usr/share/themes/noborders/xfwm4/ >> $LOG
   touch /usr/share/themes/noborders/xfwm4/themerc >> $LOG
@@ -58,12 +58,7 @@ extra_packages(){
   fi
 
   # Install vim plug
-  if [[ -f ~/.vim/autoload/plug.vim ]]; then
-    echo "Vim plug is already installed"
-  else
-    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim >> $LOG
-  fi
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim >> $LOG
 
   # Install megasync
   cd /tmp/ || exit
@@ -74,7 +69,7 @@ extra_packages(){
     wget $MEGASYNC_URL >> $LOG
     local file
     file=$(find . -name "megasync-Fedora*")
-    dnf install "$file" -y
+    dnf install "$file" -y >> $LOG
   fi
 
   # Install waldorf theme
@@ -82,7 +77,7 @@ extra_packages(){
     echo "Waldorf theme is already installed"
   else
 		  { wget 'https://dl.opendesktop.org/api/files/download/id/1460968153/s/630a5ea1c93c05cefad04f3c4fd89059f9ef6112b2d50f27ed217a6a9464a439c2f91480327da21eb5c9954f4d4a1c3172d43510103b96d00752b60b42197ac4/t/1560079934/lt/download/162986-waldorf1314.tar.xz';
-    tar xf 162986-waldorf1314.tar.xz;
+    tar -xvf 162986-waldorf1314.tar.xz;
     cp waldorf1314 /usr/share/themes/ -vri; } >> $LOG
   fi
 
@@ -92,16 +87,16 @@ extra_packages(){
  else
    cd /tmp/ || exit
    wget 'https://updates.duplicati.com/beta/duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm' >> $LOG
-   dnf install ./duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm -y
+   dnf install ./duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm -y >> $LOG
  fi
 
  # Install VLC
  if [[ -f /bin/vlc ]]; then
    echo "VLC is already installed"
  else
-   dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm -y
-   dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm -y
-   dnf install vlc -y
+   dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm -y >> $LOG
+   dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm -y >> $LOG
+   dnf install vlc -y >> $LOG
  fi
 }
 
