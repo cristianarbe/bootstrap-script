@@ -75,9 +75,13 @@ extra_packages(){
     cp waldorf1314 /usr/share/themes/ -vr >> log
 
 	# Install duplicati
-	cd /tmp/ || exit
-	wget 'https://updates.duplicati.com/beta/duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm' >> log
-    dnf install ./duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm -y
+	if [[ -f  /bin/duplicati ]]; then
+      echo "Duplicaty is already installed"
+    else
+      cd /tmp/ || exit
+	  wget 'https://updates.duplicati.com/beta/duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm' >> log
+      dnf install ./duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm -y
+	fi
 
 	# Install VLC
 	dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm -y
