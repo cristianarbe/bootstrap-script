@@ -35,7 +35,7 @@ install_dnf(){
   dnf upgrade -y
 }
 
-extra_packes(){
+extra_packages(){
   if [[ $PIA_EXISTS -eq 0 ]]; then
     cd /tmp/ || exit
     echo "###### Installing PIA"
@@ -108,7 +108,7 @@ setup_openbox(){
     echo "===================="
     echo ""
     echo "This installs packages that are not in dnf. This includes PIA, \
-      MegaSync and vim plug"
+MegaSync and vim plug"
 
     read -rp "Do you want to proceed? [y/N]: " response
     if [[ $response == "y" ]]; then
