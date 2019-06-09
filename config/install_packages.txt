@@ -4,14 +4,12 @@ claws-mail
 dmenu
 firefox
 git
-golang
 gparted
 highlight
 keepass
 levien-inconsolata-fonts
 libXScrnSaver
 mono-winforms
-nodejs
 obconf
 openbox
 pandoc
