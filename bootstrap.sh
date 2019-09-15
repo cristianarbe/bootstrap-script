@@ -41,9 +41,6 @@ install_dnf(){
   uninstall_packages=$(cat config/uninstall_packages.txt)
   # shellcheck disable=SC2086
   dnf remove $uninstall_packages -y --skip-broken >> $LOG
-
-  echo "Upgrading..."
-  dnf upgrade -y >> $LOG
 }
 
 extra_packages(){
