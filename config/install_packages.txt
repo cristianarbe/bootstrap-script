@@ -1,6 +1,5 @@
 ShellCheck
 abiword
-claws-mail
 dmenu
 feh
 firefox
@@ -16,18 +15,16 @@ obconf
 openbox
 pandoc
 pcmanfm
-qbittorrent
 qdirstat
 redshift
 simple-mtpfs
 slock
 syncthing
-tint2
+terminology
 tint2
 vim
 volumeicon
 xbacklight
-xterm
 youtube-dl
 zathura
 zathura-pdf-mupdf

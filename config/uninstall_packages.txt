@@ -1,4 +1,5 @@
 *google*cjk*
+xterm
 asunder
 catfish
 claws-mail
@@ -14,7 +15,6 @@ gimp
 gnome-control-center
 gnomebaker
 java-11-openjdk-headless
-leafpad
 libreoffice
 lxmusic
 lxterminal
@@ -26,6 +26,7 @@ parole
 pidgin
 pragha
 python2-catfish
+qbittorrent
 ristretto
 seahorse
 snapd
