@@ -1,6 +1,8 @@
 *google*cjk*
+xterm
 asunder
 catfish
+claws-mail
 dnfdragora
 evince
 fedora-obsolete-packages
@@ -11,7 +13,6 @@ geolite2-city
 gimp
 gnome-control-center
 java-11-openjdk-headless
-leafpad
 libreoffice
 mousepad
 orage
@@ -19,6 +20,7 @@ parole
 pidgin
 pragha
 python2-catfish
+qbittorrent
 ristretto
 seahorse
 snapd
