@@ -18,8 +18,10 @@ pandoc
 pcmanfm
 qbittorrent
 qdirstat
+redshift
 simple-mtpfs
 slock
+syncthing
 tint2
 tint2
 vim

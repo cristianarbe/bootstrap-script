@@ -13,7 +13,6 @@ fi
 readonly REPO="https://github.com/cristianarbe/dot-files.git"
 readonly PIA_EXISTS=$(find /etc/openvpn/ -name "pia*" 2> /dev/null | wc -l)
 readonly PIA_URL="https://www.privateinternetaccess.com/installer/pia-nm.sh"
-readonly MEGASYNC_URL="https://mega.nz/linux/MEGAsync/Fedora_30/x86_64/megasync-Fedora_30.x86_64.rpm"
 
 dot_files(){
   if [[ -f /home/${SUDO_USER}/README.md ]]; then
@@ -57,26 +56,6 @@ extra_packages(){
   # Install vim plug
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim >> $LOG
 
-  # Install megasync
-  cd /tmp/ || exit
-  if [[ -f /bin/megasync ]]; then
-    echo "MEGASync is already installed"
-  else
-    echo "Installing MEGASync..."
-    wget $MEGASYNC_URL >> $LOG
-    local file
-    file=$(find . -name "megasync-Fedora*")
-    dnf install "$file" -y >> $LOG
-  fi
-
-  # Install waldorf theme
-  if [[ -d /usr/share/themes/waldorf1314 ]]; then
-    echo "Waldorf theme is already installed"
-  else
-		  { wget 'https://dl.opendesktop.org/api/files/download/id/1460968153/s/630a5ea1c93c05cefad04f3c4fd89059f9ef6112b2d50f27ed217a6a9464a439c2f91480327da21eb5c9954f4d4a1c3172d43510103b96d00752b60b42197ac4/t/1560079934/lt/download/162986-waldorf1314.tar.xz';
-    tar -xvf 162986-waldorf1314.tar.xz;
-    cp waldorf1314 /usr/share/themes/ -vri; } >> $LOG
-  fi
 
  # Install duplicati
  if [[ -f  /bin/duplicati ]]; then
@@ -95,6 +74,8 @@ extra_packages(){
    dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm -y >> $LOG
    dnf install vlc -y >> $LOG
  fi
+
+
 }
 
 function main(){
@@ -124,7 +105,7 @@ function main(){
   echo "================="
   echo ""
   echo "This installs packages that are not in dnf. This includes PIA, \
-    MegaSync and vim plug"
+    and vim plug"
 
   read -rp "Do you want to proceed? [y/N]: " response
   if [[ $response == "y" ]]; then

@@ -1,6 +1,7 @@
 *google*cjk*
 asunder
 catfish
+claws-mail
 dnfdragora
 evince
 fedora-obsolete-packages
@@ -8,13 +9,19 @@ fedora-release-notes
 florence
 geany
 geolite2-city
+gigolo
 gimp
 gnome-control-center
+gnomebaker
 java-11-openjdk-headless
 leafpad
 libreoffice
+lxmusic
+lxterminal
+midori
 mousepad
 orage
+osmo
 parole
 pidgin
 pragha
@@ -22,6 +29,7 @@ python2-catfish
 ristretto
 seahorse
 snapd
+sylpheed
 thunar
 transmission
 xarchiver
@@ -37,4 +45,5 @@ xfce4-terminal
 xfce4-weather-plugin
 xfce4-whiskermenu-plugin
 xfdashboard
+xpad
 yelp
