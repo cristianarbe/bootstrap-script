@@ -1,5 +1,4 @@
 *google*cjk*
-xterm
 asunder
 catfish
 claws-mail
@@ -7,6 +6,7 @@ dnfdragora
 evince
 fedora-obsolete-packages
 fedora-release-notes
+firewall-config
 florence
 geany
 geolite2-city
@@ -47,4 +47,5 @@ xfce4-weather-plugin
 xfce4-whiskermenu-plugin
 xfdashboard
 xpad
+xterm
 yelp
