@@ -1,0 +1,3 @@
+#!/bin/bash
+sudo dnf install $(cat install_packages.txt)
+sudo dnf remove $(cat uninstall_packages.txt)

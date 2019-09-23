@@ -6,7 +6,7 @@ firefox
 git
 gparted
 highlight
-keepass
+keepassxc
 levien-inconsolata-fonts
 libXScrnSaver
 mono-winforms
@@ -15,7 +15,7 @@ obconf
 openbox
 pandoc
 pcmanfm
-qdirstat
+transmission-cli
 redshift
 simple-mtpfs
 slock
@@ -25,6 +25,5 @@ tint2
 vim
 volumeicon
 xbacklight
-youtube-dl
 zathura
 zathura-pdf-mupdf
