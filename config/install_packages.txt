@@ -20,10 +20,11 @@ redshift
 simple-mtpfs
 slock
 syncthing
-terminology
 tint2
 vim
 volumeicon
 xbacklight
 zathura
 zathura-pdf-mupdf
+xterm
+dawdas
