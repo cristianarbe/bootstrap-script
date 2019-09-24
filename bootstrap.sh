@@ -1,6 +1,7 @@
 #!/bin/bash -x
 
 set -e
+source config
 mkdir -p /var/log/bootstrap
 readonly LOG="/var/log/bootstrap/bootstrap.log"
 { echo ""; date; echo ""; } >> $LOG
@@ -26,20 +27,16 @@ dot_files(){
     shopt -s dotglob
     cp -rv /tmp/dot-files/* "/home/${SUDO_USER}/" >> $LOG
   fi
-  mkdir -vp /usr/share/themes/noborders/xfwm4/ >> $LOG
-  touch /usr/share/themes/noborders/xfwm4/themerc >> $LOG
 }
 
 install_dnf(){
   echo "Installing dnf packages..."
-  install_packages=$(cat config/install_packages.txt)
-  # shellcheck disable=SC2086
-  dnf install $install_packages -y --skip-broken >> $LOG
+  # shellcheck disable=SC2068
+  dnf install ${install[@]} -y --skip-broken
 
   echo "Uninstalling dnf packages..."
-  uninstall_packages=$(cat config/uninstall_packages.txt)
-  # shellcheck disable=SC2086
-  dnf remove $uninstall_packages -y --skip-broken >> $LOG
+  # shellcheck disable=SC2068
+  dnf remove ${uninstall[@]} -y --skip-broken
 }
 
 extra_packages(){
@@ -74,8 +71,6 @@ extra_packages(){
    dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm -y >> $LOG
    dnf install vlc -y >> $LOG
  fi
-
-
 }
 
 function main(){
@@ -125,4 +120,4 @@ function main(){
   fi
 }
 
-main
+
