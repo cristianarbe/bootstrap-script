@@ -12,8 +12,6 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 readonly REPO="https://github.com/cristianarbe/dot-files.git"
-readonly PIA_EXISTS=$(find /etc/openvpn/ -name "pia*" 2> /dev/null | wc -l)
-readonly PIA_URL="https://www.privateinternetaccess.com/installer/pia-nm.sh"
 
 dot_files(){
   if [[ -f /home/${SUDO_USER}/README.md ]]; then
@@ -40,19 +38,9 @@ install_dnf(){
 }
 
 extra_packages(){
-  # Install PIA
-  if [[ $PIA_EXISTS -eq 0 ]]; then
-    cd /tmp/ || exit
-    echo "Installing PIA..."
-    wget "$PIA_URL" >> $LOG
-    bash pia-nm.sh
-  else
-    echo "PIA is already installed"
-  fi
 
   # Install vim plug
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim >> $LOG
-
 
  # Install duplicati
  if [[ -f  /bin/duplicati ]]; then

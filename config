@@ -14,22 +14,23 @@ mono-winforms
 network-manager-applet
 obconf
 openbox
+openvpn
+p7zip
 pandoc
 pcmanfm
-transmission-cli
 redshift
 simple-mtpfs
 slock
 syncthing
 tint2
 tmux
+transmission-cli
 vim
 volumeicon
-p7zip
 xbacklight
+xterm
 zathura
 zathura-pdf-mupdf
-xterm
 )
 
 uninstall=(
