@@ -17,7 +17,6 @@ openbox
 openvpn
 p7zip
 pandoc
-pcmanfm
 redshift
 simple-mtpfs
 slock
@@ -25,6 +24,7 @@ syncthing
 tint2
 tmux
 transmission-cli
+vifm
 vim
 volumeicon
 xbacklight
@@ -36,7 +36,6 @@ zathura-pdf-mupdf
 uninstall=(
 *google*cjk*
 asunder
-golang
 catfish
 claws-mail
 dnfdragora
@@ -51,6 +50,7 @@ gigolo
 gimp
 gnome-control-center
 gnomebaker
+golang
 java-11-openjdk-headless
 keepass
 libreoffice
@@ -61,6 +61,7 @@ mousepad
 orage
 osmo
 parole
+pcmanfm
 pidgin
 pragha
 python2-catfish
@@ -69,6 +70,7 @@ ristretto
 seahorse
 snapd
 sylpheed
+terminology
 thunar
 transmission
 xarchiver
@@ -85,7 +87,6 @@ xfce4-weather-plugin
 xfce4-whiskermenu-plugin
 xfdashboard
 xpad
-terminology
 yelp
 youtube-dl
 )
