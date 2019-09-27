@@ -120,4 +120,4 @@ function main(){
   fi
 }
 
-
+main
