@@ -1,63 +1,72 @@
 #!/bin/bash -x
 
+# TODO:
+# Check if operations are already done before asking
+# Use dialogs
+
 set -e
 source config
 mkdir -p /var/log/bootstrap
 readonly LOG="/var/log/bootstrap/bootstrap.log"
-{ echo ""; date; echo ""; } >> $LOG
+{ echo ""; date; echo ""; } 
 
 if [[ $EUID -ne 0 ]]; then
   echo "This script must be run as root"
   exit 1
 fi
 
-readonly REPO="https://github.com/cristianarbe/dot-files.git"
+readonly REPO="https://github.com/cristianarbe/dotfiles.git"
 
 dot_files(){
-  if [[ -f /home/${SUDO_USER}/README.md ]]; then
+  if [[ -f /home/"${SUDO_USER}"/README.md ]]; then
     echo "Dot files are already set"
   else
     echo "Setting up dot files..."
-    [[ -d /tmp/dot-files ]] && rm -rfv /tmp/dot-files >> $LOG
-    cd  /tmp/ || exit
-    git clone "$REPO" >> $LOG
-    cd dot-files || exit
-    shopt -s dotglob
-    cp -rv /tmp/dot-files/* "/home/${SUDO_USER}/" >> $LOG
+    [[ -d /tmp/dotfiles ]] && rm -rfv /tmp/dotfiles 
+    su - "${SUDO_USER}" -c "rm -rf dotfiles"
+    su - "${SUDO_USER}" -c "git clone $REPO" 
+    su - "${SUDO_USER}" -c "mv dotfiles/.git/ ../"
+    su - "${SUDO_USER}" -c "git reset --hard"
+    su - "${SUDO_USER}" -c "xrdb /home/${SUDO_USER}/.Xresources"
   fi
 }
 
 install_dnf(){
+  echo "Uninstalling dnf packages..."
+  # shellcheck disable=SC2068
+  dnf remove ${uninstall[@]} -y --skip-broken
+
   echo "Installing dnf packages..."
   # shellcheck disable=SC2068
   dnf install ${install[@]} -y --skip-broken
 
-  echo "Uninstalling dnf packages..."
-  # shellcheck disable=SC2068
-  dnf remove ${uninstall[@]} -y --skip-broken
+  su - "${SUDO_USER}" -c systemctl --user start syncthing
+  su - "${SUDO_USER}" -c systemctl --user enable syncthing
+
 }
 
 extra_packages(){
 
   # Install vim plug
-    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim >> $LOG
+    su - "${SUDO_USER}" -c "curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 
  # Install duplicati
  if [[ -f  /bin/duplicati ]]; then
    echo "Duplicaty is already installed"
  else
    cd /tmp/ || exit
-   wget 'https://updates.duplicati.com/beta/duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm' >> $LOG
-   dnf install ./duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm -y >> $LOG
+   wget 'https://updates.duplicati.com/beta/duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm' 
+   dnf install ./duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm -y 
  fi
 
  # Install VLC
  if [[ -f /bin/vlc ]]; then
    echo "VLC is already installed"
  else
-   dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm -y >> $LOG
-   dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm -y >> $LOG
-   dnf install vlc -y >> $LOG
+   dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm -y 
+   dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm -y 
+   dnf install vlc -y 
+   su - "${SUDO_USER}" -c "mkdir /home/${SUDO_USER}/.cache/vlc/ -p"
  fi
 }
 
@@ -87,8 +96,8 @@ function main(){
   echo "3. Extra packages"
   echo "================="
   echo ""
-  echo "This installs packages that are not in dnf. This includes PIA, \
-    and vim plug"
+  echo "This installs packages that are not in dnf. This includes duplicati, \
+VLC and vim plug"
 
   read -rp "Do you want to proceed? [y/N]: " response
   if [[ $response == "y" ]]; then
