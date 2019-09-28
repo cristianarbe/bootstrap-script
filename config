@@ -26,9 +26,11 @@ tmux
 transmission-cli
 vifm
 vim
+transmission-daemon
 volumeicon
 xbacklight
 xterm
+qdirstat
 zathura
 zathura-pdf-mupdf
 )
