@@ -40,16 +40,9 @@ install_dnf(){
 extra_packages(){
 
   # Install vim plug
-    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim >> $LOG
-
- # Install duplicati
- if [[ -f  /bin/duplicati ]]; then
-   echo "Duplicaty is already installed"
- else
-   cd /tmp/ || exit
-   wget 'https://updates.duplicati.com/beta/duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm' >> $LOG
-   dnf install ./duplicati-2.0.4.5-2.0.4.5_beta_20181128.noarch.rpm -y >> $LOG
- fi
+  mkdir -p /home/${SUDO_USER}/.vim/autoload/
+  curl -fLo "/home/${SUDO_USER}/.vim/autoload/plug.vim" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  chown -R cariza:cariza "/home/${SUDO_USER}/.vim"
 
  # Install VLC
  if [[ -f /bin/vlc ]]; then
@@ -58,7 +51,16 @@ extra_packages(){
    dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm -y >> $LOG
    dnf install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-"$(rpm -E %fedora)".noarch.rpm -y >> $LOG
    dnf install vlc -y >> $LOG
+   mkdir "/home/${SUDO_USER}/.cache/vlc"
  fi
+
+ # Install duplicati
+ if [[ -f  /bin/duplicati ]]; then
+   echo "Duplicaty is already installed"
+ else
+   dnf install https://github.com/duplicati/duplicati/releases/download/v2.0.4.23-2.0.4.23_beta_2019-07-14/duplicati-2.0.4.23-2.0.4.23_beta_20190714.noarch.rpm -y
+ fi
+
 }
 
 function main(){
