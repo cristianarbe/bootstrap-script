@@ -76,6 +76,12 @@ extra_packages(){
    dnf install https://github.com/duplicati/duplicati/releases/download/v2.0.4.23-2.0.4.23_beta_2019-07-14/duplicati-2.0.4.23-2.0.4.23_beta_20190714.noarch.rpm -y
  fi
 
+ # setup openvpn
+
+ cd /etc/openvpn
+ wget https://www.privateinternetaccess.com/openvpn/openvpn.zip
+ unzip openvpn.zip
+
 }
 
 function main(){
