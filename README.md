@@ -1,3 +1,5 @@
 ```sh
-wget https://raw.githubusercontent.com/cristianarbe/bootstrap-script/master/bootstrap.sh && sudo bash bootstrap.sh
+$ git clone https://github.com/cristianarbe/bootstrap-script.git
+$ cd bootstrap-script
+$ sudo bash bootstrap.sh
 ```
