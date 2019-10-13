@@ -38,10 +38,10 @@ install_dnf(){
 
   echo "Installing dnf packages..."
   # shellcheck disable=SC2068
-  dnf install ${install[@]} -y --skip-broken
+  # dnf install ${install[@]} -y --skip-broken
 
-  su - "${SUDO_USER}" -c systemctl --user start syncthing
-  su - "${SUDO_USER}" -c systemctl --user enable syncthing
+  # su - "${SUDO_USER}" -c systemctl --user start syncthing
+  # su - "${SUDO_USER}" -c systemctl --user enable syncthing
 
 }
 
