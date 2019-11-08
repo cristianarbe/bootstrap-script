@@ -1,40 +1,19 @@
 #!/bin/bash
 
 install=(
-    ShellCheck
-    abiword
-    dmenu
-    feh
+    shellcheck
     firefox
-    git
     gnome-disk-utility
     gparted
     highlight
     keepassxc
-    levien-inconsolata-fonts
-    libXScrnSaver
-    mono-winforms
-    network-manager-applet
-    obconf
-    openbox
-    openvpn
     p7zip
     pandoc
     qdirstat
     redshift
-    simple-mtpfs
-    slock
-    syncthing
-    tint2
     tmux
     torbrowser-launcher
-    transmission-cli
-    transmission-daemon
-    vifm
     vim
-    volumeicon
-    xbacklight
-    xterm
     zathura
     zathura-pdf-mupdf
 )
