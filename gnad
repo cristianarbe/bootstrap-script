@@ -15,10 +15,12 @@ dot_files(){
 
 install_dnf(){
   echo "Uninstalling dnf packages..."
+  # shellcheck disable=SC2154
   # shellcheck disable=SC2068
   dnf remove ${uninstall[@]} -y --skip-broken
 
   echo "Installing dnf packages..."
+  # shellcheck disable=SC2154
   # shellcheck disable=SC2068
   dnf install ${install[@]} -y --skip-broken
 }
@@ -26,7 +28,7 @@ install_dnf(){
 function ask(){
   read -rp "$1" response
   if [[ $response == "y" ]]; then
-    $@
+    "$@"
   fi
 }
 
@@ -42,6 +44,7 @@ function main(){
       if [ "$2" == "" ]; then
         echo "Nothing specified."
       else
+        # shellcheck disable=SC1090
         source "$2"
 
         ask "Dot files install: this will install the dotfiles. This will \
@@ -61,4 +64,4 @@ you want to proceed? [y/N]: " "extra_packages && ./theming.sh"
   fi
 }
 
-main $@
+main "$@"
