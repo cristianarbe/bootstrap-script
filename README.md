@@ -1,44 +1,35 @@
-# Trisquel-Beautify
+# GNad
 
-Bash script to make Trisquel pleasant to the eyes and improve usability.
-
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+GNad's Not A Distro. Grabs a config file and setups your workstation for you. Only working with Fedora at the moment.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-```
-no prerequisites at this moment
-```
+None apart from basic GNU commands.
 
 ### Installing
 
-Just run:
-
-```bash
-git clone https://github.com/cristianarbe/trisquel-beautify.git && \
-  cd trisquel-beautify && \
-  bash bootstrap.sh
+```sh
+git clone https://github.com/cristianarbe/bootstrap-script.git
+cd bootstrap-script
+sudo chmod +x gnad
 ```
-## Contributing
 
-Suggestions/improvements are [welcome](https://github.com/cristianarbe/trisquel-beautify/issues)!
+## Usage
+
+```sh
+./gnad install <config file>
+```
+
+## Feedback
+
+Suggestions/improvements
+[welcome](https://github.com/cristianarbe/bootstrap-script/issues)!
 
 ## Authors
 
 * **Cristian Ariza** - *Initial work* - [cristianarbe](https://github.com/cristianarbe)
 
-See also the list of [contributors](https://github.com/cristianarbe/trisquel-beautify/contributors) who participated in this project.
-
 ## License
 
-This project is licensed under the The GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details
-
-## Acknowledgments
-
-* The [Solus team](https://getsol.us/home/) for the design.
-* The [Trisquel](https://trisquel.info/) team for creating a fully libre GNU/Linux distro.
+This project is licensed under the GPL-3.0 License - see the [LICENSE.md](LICENSE.md) file for details
 
