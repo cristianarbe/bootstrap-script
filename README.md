@@ -10,7 +10,7 @@ None apart from basic GNU commands.
 
 ```sh
 git clone https://github.com/cristianarbe/bootstrap-script.git
-cd bootstrap-script
+cd gnad
 sudo chmod +x gnad
 ```
 
