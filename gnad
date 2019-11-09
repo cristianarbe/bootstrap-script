@@ -7,7 +7,7 @@ for file in modules/*.sh; do
 done
 
 FILE="$2"
-SCRIPTPATH="${FILE%/*}"
+export SCRIPTPATH="${FILE%/*}"
 
 main(){
     set -e
@@ -46,6 +46,7 @@ main(){
                 you want to proceed? [y/N]: " extra_packages
                 
                 cp modules/theming /tmp/
+                # shellcheck disable=SC2016
                 ask "This install the themes, do you want to proceed? [y/N]: " 'su - ${SUDO_USER} -c "source /tmp/theming"'
                 
                 ask "This will install the config files. This will \
