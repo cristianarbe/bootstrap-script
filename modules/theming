@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 DIR="$(pwd)"
 
 readonly USERHOME="/home/$(whoami)"
