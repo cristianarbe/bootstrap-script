@@ -6,17 +6,16 @@ export install=(
     curl
     filezilla
     firefox
+    git
     gnome-disk-utility
     gparted
-    highlight
     keepassxc
     p7zip
-    pandoc
+    pcmanfm
     qdirstat
     redshift
     shellcheck
     thunderbird
-    pcmanfm
     tmux
     torbrowser-launcher
     vim
