@@ -16,6 +16,7 @@ export install=(
     redshift
     shellcheck
     thunderbird
+    pcmanfm
     tmux
     torbrowser-launcher
     vim
@@ -34,7 +35,6 @@ export uninstall=(
     dolphin
     evince
     falkon
-    firewall-config
     florence
     galculator
     geany
@@ -71,17 +71,14 @@ export uninstall=(
     ksysguard
     ktorrent
     kwalletmanager
-    libreoffice
     lxmusic
     lxtask
     lxterminal
     midori
-    mousepad
     okular
     orage
     osmo
     parole
-    pcmanfm
     pidgin
     pragha
     qbittorrent
@@ -100,12 +97,9 @@ export uninstall=(
     xfce4-dict
     xfce4-mailwatch-plugin
     xfce4-taskmanager
-    xfce4-terminal
     xfce4-weather-plugin
-    xfce4-whiskermenu-plugin
     xfdashboard
     xpad
-    xscreensaver*
     yelp
     youtube-dl
 )
