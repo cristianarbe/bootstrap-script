@@ -19,7 +19,7 @@ main(){
             echo "Nothing specified."
         else
             # shellcheck disable=SC1090
-            source "$2"
+            source "$2" "$2"
             
             ask "Dot files install: this will install the dotfiles. This will \
             override your dot files, do you want to proceed? [y/N]: " dot_files
