@@ -12,4 +12,7 @@ install_apt(){
     # shellcheck disable=SC2154
     # shellcheck disable=SC2068
     apt remove ${uninstall[@]}
+
+    echo 'Autoremoving...'
+    apt autoremove
 }
