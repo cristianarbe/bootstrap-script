@@ -1,7 +1,6 @@
 #!/bin/bash
-
 export install=(
-    shellcheck
+    filezilla
     firefox
     gnome-disk-utility
     gparted
@@ -11,14 +10,16 @@ export install=(
     pandoc
     qdirstat
     redshift
+    shellcheck
+    thunderbird
     tmux
     torbrowser-launcher
     vim
+    vlc
     zathura
 )
 
 export uninstall=(
-    *google*cjk*
     akregator
     ark
     asunder
@@ -108,16 +109,8 @@ export uninstall=(
 readonly REPO="https://github.com/cristianarbe/dotfiles.git"
 
 extra_packages(){
-  # Install vim plug
-    su - "${SUDO_USER}" -c "curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-
- # Install VLC
- if [[ -f /bin/vlc ]]; then
-   echo "VLC is already installed"
- else
-   dnf install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-"$(rpm -E %fedora)".noarch.rpm -y
-   dnf install vlc -y
-   su - "${SUDO_USER}" -c "mkdir /home/${SUDO_USER}/.cache/vlc/ -p"
- fi
+    for file in extra/*.sh; do
+        # shellcheck disable=SC1090
+        source "$file"
+    done
 }
