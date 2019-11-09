@@ -48,9 +48,10 @@ main(){
                 ask "This will install the config files. This will \
                 override your config files, do you want to proceed? [y/N]: " dot_files
                 
-                cp modules/theming /tmp/
+                cd "$INITIALPATH" || exit
+                cp ./* /tmp/gnad/
                 # shellcheck disable=SC2016
-                ask "This install the themes, do you want to proceed? [y/N]: " 'su - ${SUDO_USER} -c "source /tmp/theming"'
+                ask "This install the themes, do you want to proceed? [y/N]: " 'su - ${SUDO_USER} -c "source /tmp/gnad/theming"'
             else
                 echo "gnad: '$3' is not a gnad argument. See 'gnad --help'."
             fi
