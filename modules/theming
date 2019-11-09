@@ -1,7 +1,7 @@
 #!/bin/bash
 DIR="$(pwd)"
 
-readonly USERHOME="/home/${SUDO_USER}"
+readonly USERHOME="/home/$(whoami)"
 
 # Install theme
 mkdir "$USERHOME/.themes" -p
