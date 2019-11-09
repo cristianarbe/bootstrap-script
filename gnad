@@ -8,27 +8,27 @@ dot_files(){
     su - "${SUDO_USER}" -c "cd $HOME"
     su - "${SUDO_USER}" -c "rm -rf dotfiles"
     su - "${SUDO_USER}" -c "git clone $REPO"
-    su - "${SUDO_USER}" -c "mv dotfiles/.git/ ../"
+    su - "${SUDO_USER}" -c "mv dotfiles/.git/ ./"
     su - "${SUDO_USER}" -c "git reset --hard"
   fi
 }
 
-install_dnf(){
-  echo "Uninstalling dnf packages..."
+install_apt(){
+  echo "Installing apt packages..."
   # shellcheck disable=SC2154
   # shellcheck disable=SC2068
-  dnf remove ${uninstall[@]} -y --skip-broken
+  apt install ${install[@]} -y 
 
-  echo "Installing dnf packages..."
+  echo "Uninstalling apt packages..."
   # shellcheck disable=SC2154
   # shellcheck disable=SC2068
-  dnf install ${install[@]} -y --skip-broken
+  apt remove ${uninstall[@]} -y 
 }
 
 function ask(){
   read -rp "$1" response
   if [[ $response == "y" ]]; then
-    "$@"
+    "$2"
   fi
 }
 
@@ -50,7 +50,7 @@ function main(){
         ask "Dot files install: this will install the dotfiles. This will \
 override your dot files, do you want to proceed? [y/N]: " dot_files
 
-        ask "This installs the packages, do you want to proceed? [y/N]: " install_dnf
+        ask "This installs the packages, do you want to proceed? [y/N]: " install_apt
 
         ask "This installs the packages that are not in the default repos, do \
 you want to proceed? [y/N]: " "extra_packages && ./theming.sh"
