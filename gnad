@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -x
 # Load all modules
 for file in modules/*.sh; do
     # shellcheck disable=SC1090
@@ -45,7 +45,8 @@ main(){
                 ask "This installs the packages that are not in the default repos, do \
                 you want to proceed? [y/N]: " extra_packages
                 
-                ask "This install the themes, do you want to proceed? [y/N]: " 'source modules/theming'
+                cp modules/theming /tmp/
+                ask "This install the themes, do you want to proceed? [y/N]: " 'su - ${SUDO_USER} -c "source /tmp/theming"'
                 
                 ask "This will install the config files. This will \
                 override your config files, do you want to proceed? [y/N]: " dot_files
