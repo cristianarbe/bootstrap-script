@@ -12,14 +12,14 @@ $ sudo apt update && sudo apt install curl -y
 
 Get the last version with:
 ```sh
-eval "$(curl https://raw.githubusercontent.com/cristianarbe/gnad/master/install)"
+$ eval "$(curl https://raw.githubusercontent.com/cristianarbe/gnad/master/install)"
 ```
 
 ## Usage
 
 Run GNad with:
 ```sh
-sudo ./gnad install <config file>
+$ sudo ./gnad install <config file>
 ```
 
 ## Feedback
