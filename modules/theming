@@ -61,3 +61,7 @@ xfconf-query -c xfwm4 -p /general/title_font -s "Clear Sans 12"
 # Install keyboard shortcuts
 rm "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml"
 cp "$DIR/xfce4-keyboard-shortcuts.xml" "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml"
+
+
+read -pr "You are going to be logged out now (this is normal). Save your work and press enter to continue..."
+xfce4-session-logout
