@@ -4,12 +4,12 @@ GNad's Not A Distro. Grabs a config file and setups your workstation for you. On
 
 ### Prerequisites
 
-None apart from basic GNU commands.
+* curl
 
 ### Installing
 
 ```sh
-wget https://github.com/cristianarbe/gnad/archive/master.zip && unzip master.zip && cd gnad-master && chmod +x gnad
+eval "$(curl https://raw.githubusercontent.com/cristianarbe/gnad/master/install)"
 ```
 
 ## Usage

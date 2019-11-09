@@ -1,0 +1,2 @@
+#!/bin/bash
+wget https://github.com/cristianarbe/gnad/archive/master.zip && unzip master.zip && cd gnad-master && chmod +x gnad
