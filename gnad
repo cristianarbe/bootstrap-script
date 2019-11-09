@@ -7,7 +7,7 @@ for file in modules/*.sh; do
 done
 
 FILE="$2"
-export SCRIPTPATH="${FILE%/*}"
+export INITIALPATH="${FILE%/*}"
 
 main(){
     set -e
