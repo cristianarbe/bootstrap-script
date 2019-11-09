@@ -9,7 +9,7 @@ None apart from basic GNU commands.
 ### Installing
 
 ```sh
-git clone https://github.com/cristianarbe/gnad.git && cd gnad && sudo chmod +x gnad
+wget https://github.com/cristianarbe/gnad/archive/master.zip && unzip master.zip && cd gnad-master && chmod +x gnad
 ```
 
 ## Usage
