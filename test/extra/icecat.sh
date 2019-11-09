@@ -5,7 +5,7 @@ if [[ ! -d /opt/icecat ]]; then
     tar xfj icecat-60.7.0.en-US.gnulinux-x86_64.tar.bz2
     mv  icecat /opt/
     ln -s /opt/icecat/icecat /usr/local/bin/icecat
-    cd "$SCRIPTPATH" || exit
+    cd "$INITIALPATH" || exit
 else
     echo 'Icecat is already installed'
 fi
