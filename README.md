@@ -9,9 +9,7 @@ None apart from basic GNU commands.
 ### Installing
 
 ```sh
-git clone https://github.com/cristianarbe/bootstrap-script.git
-cd gnad
-sudo chmod +x gnad
+git clone https://github.com/cristianarbe/bootstrap-script.git && cd gnad && sudo chmod +x gnad
 ```
 
 ## Usage
