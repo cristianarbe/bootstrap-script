@@ -109,7 +109,8 @@ export uninstall=(
 readonly REPO="https://github.com/cristianarbe/dotfiles.git"
 
 extra_packages(){
-    for file in extra/*.sh; do
+    SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+    for file in ${SCRIPTPATH}/extra/*.sh; do
         # shellcheck disable=SC1090
         source "$file"
     done
