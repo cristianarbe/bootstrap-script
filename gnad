@@ -45,14 +45,12 @@ main(){
                 ask "This installs the packages that are not in the default repos, do \
                 you want to proceed? [y/N]: " extra_packages
                 
-                cp modules/theming /tmp/
-                # shellcheck disable=SC2016
-                ask "This install the themes, do you want to proceed? [y/N]: " 'su - ${SUDO_USER} -c "source /tmp/theming"'
-                
                 ask "This will install the config files. This will \
                 override your config files, do you want to proceed? [y/N]: " dot_files
                 
-                ask "Installation finished, do you want to reboot? [y/N]: " reboot
+                cp modules/theming /tmp/
+                # shellcheck disable=SC2016
+                ask "This install the themes, do you want to proceed? [y/N]: " 'su - ${SUDO_USER} -c "source /tmp/theming"'
             else
                 echo "gnad: '$3' is not a gnad argument. See 'gnad --help'."
             fi
