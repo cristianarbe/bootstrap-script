@@ -1,67 +1,43 @@
 #!/bin/bash
 
-dot_files(){
-  if [[ -f /home/"${SUDO_USER}"/README.md ]]; then
-    echo "Dot files are already set"
-  else
-    echo "Setting up dot files..."
-    su - "${SUDO_USER}" -c "cd $HOME"
-    su - "${SUDO_USER}" -c "rm -rf dotfiles"
-    su - "${SUDO_USER}" -c "git clone $REPO"
-    su - "${SUDO_USER}" -c "mv dotfiles/.git/ ./"
-    su - "${SUDO_USER}" -c "git reset --hard"
-  fi
-}
+# Load all modules
+for file in modules/*; do
+    # shellcheck disable=SC1090
+    source "$file"
+done
 
-install_apt(){
-  echo "Installing apt packages..."
-  # shellcheck disable=SC2154
-  # shellcheck disable=SC2068
-  apt install ${install[@]} -y 
+main(){
+    set -e
+    
+    if [[ $EUID -ne 0 ]]; then
+      echo "This script must be run as root"
+      exit 1
+    fi
+    
+    if [ "$1" == "install" ]; then
+        if [ "$2" == "" ]; then
+            echo "Nothing specified."
+        else
+            # shellcheck disable=SC1090
+            source "$2"
+            
+            ask "Dot files install: this will install the dotfiles. This will \
+            override your dot files, do you want to proceed? [y/N]: " dot_files
+            
+            ask "This installs the packages, do you want to proceed? [y/N]: " install_apt
+            
+            ask "This installs the packages that are not in the default repos, do \
+            you want to proceed? [y/N]: " extra_packages
 
-  echo "Uninstalling apt packages..."
-  # shellcheck disable=SC2154
-  # shellcheck disable=SC2068
-  apt remove ${uninstall[@]} -y 
-}
-
-function ask(){
-  read -rp "$1" response
-  if [[ $response == "y" ]]; then
-    "$2"
-  fi
-}
-
-function main(){
-  set -e
-
-  #if [[ $EUID -ne 0 ]]; then
-  #  echo "This script must be run as root"
-  #  exit 1
-  #fi
-
-  if [ "$1" == "install" ]; then
-      if [ "$2" == "" ]; then
-        echo "Nothing specified."
-      else
-        # shellcheck disable=SC1090
-        source "$2"
-
-        ask "Dot files install: this will install the dotfiles. This will \
-override your dot files, do you want to proceed? [y/N]: " dot_files
-
-        ask "This installs the packages, do you want to proceed? [y/N]: " install_apt
-
-        ask "This installs the packages that are not in the default repos, do \
-you want to proceed? [y/N]: " "extra_packages && ./theming.sh"
-
-        ask "Installation finished, do you want to reboot? [y/N]: " reboot
-      fi
-  elif [ "$1" == "" ]; then
-    echo "usage: gnad <command> [<args>]"
-  else
-    echo "gnad: '$2' is not a gnad command. See 'gnad --help'."
-  fi
+            ask "This install the themes, do you want to proceed? [y/N" theming
+            
+            ask "Installation finished, do you want to reboot? [y/N]: " reboot
+        fi
+        elif [ "$1" == "" ]; then
+        echo "usage: gnad <command> [<args>]"
+    else
+        echo "gnad: '$2' is not a gnad command. See 'gnad --help'."
+    fi
 }
 
 main "$@"
