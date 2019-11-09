@@ -22,14 +22,14 @@ main(){
             source "$2" "$2"
             
             ask "Dot files install: this will install the dotfiles. This will \
-            override your dot files, do you want to proceed? [y/N]: " dot_files
+override your dot files, do you want to proceed? [y/N]: " dot_files
             
             ask "This installs the packages, do you want to proceed? [y/N]: " install_apt
             
             ask "This installs the packages that are not in the default repos, do \
-            you want to proceed? [y/N]: " extra_packages
+you want to proceed? [y/N]: " extra_packages
 
-            ask "This install the themes, do you want to proceed? [y/N" theming
+            ask "This install the themes, do you want to proceed? [y/N]: " theming
             
             ask "Installation finished, do you want to reboot? [y/N]: " reboot
         fi
