@@ -4,15 +4,16 @@ set -e
 DIR="$(pwd)"
 
 readonly USERHOME="/home/$(whoami)"
+DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/1000/bus"
 
 # Install theme
 mkdir "$USERHOME/.themes" -p
 cd "$USERHOME/.themes/" || exit
 
-git clone https://github.com/vinceliuice/vimix-gtk-themes.git
+[[ ! -d vimix-gtk-themes ]] && git clone https://github.com/vinceliuice/vimix-gtk-themes.git
 bash vimix-gtk-themes/Install
 
-xfconf-query -c xsettings -p /Net/ThemeName -s "vimix-light-doder"
+sed -i 's/<property name="theme" type="string" value=".*"\/>/<property name="theme" type="string" value="vimix-light-doder"\/>/g' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml
 xfconf-query -c xfwm4 -p /general/theme -s "vimix-light-doder"
 
 # Install icons & cursor
@@ -63,5 +64,5 @@ rm "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.
 cp "$DIR/xfce4-keyboard-shortcuts.xml" "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml"
 
 
-read -pr "You are going to be logged out now (this is normal). Save your work and press enter to continue..."
+read -pr "Changes will not be applied until you log out and log back in. You are going to be logged out now. Save your work and press enter to continue..."
 xfce4-session-logout
