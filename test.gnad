@@ -1,6 +1,6 @@
 #!/bin/bash
 
-install=(
+export install=(
     shellcheck
     firefox
     gnome-disk-utility
@@ -15,12 +15,10 @@ install=(
     torbrowser-launcher
     vim
     zathura
-    zathura-pdf-mupdf
 )
 
-uninstall=(
+export uninstall=(
     *google*cjk*
-    akonadiimportwizard
     akregator
     ark
     asunder
@@ -28,35 +26,23 @@ uninstall=(
     catfish
     claws-mail
     clipit
-    dnfdragora
     dolphin
-    dragon
     evince
     falkon
-    fedora-obsolete-packages
-    fedora-release-notes
     firewall-config
     florence
     galculator
     geany
-    geolite2-city
     gigolo
     gimp
-    gnome-abrt
     gnome-control-center
-    gnomebaker
     golang
     gpicview
     gwenview
-    java-11-openjdk-headless
     juk
-    kaddressbook
-    kadressbook
     kamoso
     kcalc
     kcharselect
-    kde-partitionmanager
-    keepass
     kfind
     kget
     kgpg
@@ -84,7 +70,6 @@ uninstall=(
     lxmusic
     lxtask
     lxterminal
-    mediawriter
     midori
     mousepad
     okular
@@ -94,7 +79,6 @@ uninstall=(
     pcmanfm
     pidgin
     pragha
-    python2-catfish
     qbittorrent
     ristretto
     seahorse
@@ -106,8 +90,6 @@ uninstall=(
     transmission
     xarchiver
     xfburn
-    xfce-screenshooter
-    xfce4-about
     xfce4-clipman-plugin
     xfce4-cpugraph-plugin
     xfce4-dict
