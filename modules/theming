@@ -43,11 +43,6 @@ cp "xfwm4.xml" "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml"
 [[ -f "$USERHOME/.config/xfce4/panel/whiskermenu-1.rc" ]] && rm "$USERHOME/.config/xfce4/panel/whiskermenu-1.rc"
 cp "whiskermenu-1.rc" "$USERHOME/.config/xfce4/panel/"
 xfconf-query -c xsettings -p /Gtk/CursorThemeName -s Breeze
-
-# Install font
-mkdir -p "$USERHOME/.fonts/"
-cd "$USERHOME/.fonts/" || exit
-wget -q https://www.fontsquirrel.com/fonts/download/clear-sans
 unzip -o clear-sans
 xfconf-query -c xsettings -p /Gtk/FontName -s "Clear Sans 12"
 sed -i 's/<property name="title_font" type="string" value=".*"\/>/<property name="title_font" type="string" value="Clear Sans 12"\/>/g' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml
@@ -55,6 +50,11 @@ sed -i 's/<property name="title_font" type="string" value=".*"\/>/<property name
 # Install keyboard shortcuts
 [[ -f "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml" ]] && rm "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml"
 cp "xfce4-keyboard-shortcuts.xml" "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml"
+
+# Install font
+mkdir -p "$USERHOME/.fonts/"
+cd "$USERHOME/.fonts/" || exit
+wget -q https://www.fontsquirrel.com/fonts/download/clear-sans
 
 xfce4-panel -r
 /usr/lib64/xfce4/xfconf/xfconfd &> /dev/null &
