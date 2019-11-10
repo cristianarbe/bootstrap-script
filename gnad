@@ -51,9 +51,8 @@ main(){
                 
                 mkdir -p /tmp/gnad/
                 cp "$SOURCEPATH/*" /tmp/gnad/ -r
-                cd /tmp/gnad
                 # shellcheck disable=SC2016
-                ask "This install the themes, do you want to proceed? [y/N]: " 'su - ${SUDO_USER} -c "source modules/theming"'
+                ask "This install the themes, do you want to proceed? [y/N]: " 'su - ${SUDO_USER} -c "source /tmp/gnad/modules/theming"'
             else
                 echo "gnad: '$3' is not a gnad argument. See 'gnad --help'."
             fi

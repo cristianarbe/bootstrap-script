@@ -19,21 +19,21 @@ xfconf-query -c xfwm4 -p /general/theme -s "vimix-light-doder"
 mkdir "$USERHOME/.icons" -p
 cd "$USERHOME/.icons/" || exit
 
-wget  https://dllb2.pling.com/api/files/download/id/1560239555/s/1b2d0b91b1e7cb142dc3ef463fa0f1d9aa67860741a4ffc1450d54e508df42d6ae5b1502300dd745d668b92a7ec9e294bb207bb45fd403f9a488ad28621269f3/t/1573344200/c/8ebc9c9f7acc642102530eb48aee355e71a57fd9918afc3b4696f6a8d221c1a06f000122a8ac8d1ba526c7fd920f8183f0045fc1419af1e1cb103ee3fb81d373/lt/download/Vimix-icon-theme.tar.xz
-tar -xJvf Vimix-icon-theme.tar.xz
-
+wget https://github.com/vinceliuice/vimix-icon-theme/archive/master.zip
+unzip master.zip
+bash vimix-icon-theme-master/install.sh
 xfconf-query -c xsettings -p /Net/IconThemeName -s "Vimix-Paper"
 
 # Install wallpaper
-cd "$USERHOME/Pictures/" || exit
+akicd "$USERHOME/Pictures/" || exit
 wget https://raw.githubusercontent.com/cristianarbe/gettrisquel.org/master/images/banner.jpg
 xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/workspace0/last-image -s "$USERHOME/Pictures/banner.jpg"
-cd "$DIR" || exit
 
 # Install panel setup
 pkill xfconfd
 [[ -f "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml" ]] && rm "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
 
+cd "/tmp/gnad/modules" || exit
 cp "modules/xfce4-panel.xml" "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/"
 # Fix pulseaudio icon
 cp "modules/gtk.css" "$USERHOME/.config/gtk-3.0/"
