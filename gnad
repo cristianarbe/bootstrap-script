@@ -1,16 +1,17 @@
 #!/bin/bash
-set -x
-# Load all modules
-for file in modules/*.sh; do
-    # shellcheck disable=SC1090
-    source "$file"
-done
-
-FILE="$2"
-export CONFIGPATH="${FILE%/*}"
-SOURCEPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 main(){
+    set -x
+    # Load all modules
+    for file in modules/*.sh; do
+        # shellcheck disable=SC1090
+        source "$file"
+    done
+    
+    FILE="$2"
+    export CONFIGPATH="${FILE%/*}"
+    SOURCEPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+    export SOURCEPATH
     set -e
     
     if [[ $EUID -ne 0 ]]; then
@@ -49,10 +50,7 @@ main(){
                 ask "This will install the config files. This will \
                 override your config files, do you want to proceed? [y/N]: " dot_files
                 
-                mkdir -p /tmp/gnad/
-                cp "$SOURCEPATH"/* /tmp/gnad/ -r
-                # shellcheck disable=SC2016
-                ask "This install the themes, do you want to proceed? [y/N]: " 'su - ${SUDO_USER} -c "source /tmp/gnad/modules/theming"'
+                ask "This install the themes, do you want to proceed? [y/N]: " theming
             else
                 echo "gnad: '$3' is not a gnad argument. See 'gnad --help'."
             fi
