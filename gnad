@@ -1,23 +1,27 @@
 #!/bin/bash
 
 main(){
+    
+    if [[ $EUID -ne 0 ]]; then
+        echo "This script must be run as root"
+        exit 1
+    fi
+    
+    # echo the ran commands
     set -x
+    # if something fails, exit
+    set -e
+    
     # Load all modules
     for file in modules/*.sh; do
         # shellcheck disable=SC1090
         source "$file"
     done
     
-    FILE="$2"
-    export CONFIGPATH="${FILE%/*}"
+    CONFIGFILE="$2"
+    export CONFIGPATH="${CONFIGFILE%/*}"
     SOURCEPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
     export SOURCEPATH
-    set -e
-    
-    if [[ $EUID -ne 0 ]]; then
-        echo "This script must be run as root"
-        exit 1
-    fi
     
     if [[ "$1" == "install" ]]; then
         if [[ "$2" == "" ]]; then
@@ -27,33 +31,15 @@ main(){
             source "$2" "$2"
             
             [[ ! -d logs ]] && mkdir logs
-            if [[ "$3" == "-y" ]]; then
-                echo 'Installing packages...'
-                install_apt >> /logs/gnad.log
-                echo 'Installing extra packages...'
-                extra_packages >>/logs/gnad.log
-                echo 'Installing themes...'
-                theming >>/logs/gnad.log
-                echo 'Installing config...'
-                dot_files >>/logs/gnad.log
-                elif [[ "$3" == "-q" ]]; then
-                install_apt
-                extra_packages
-                theming
-                dot_files
-                elif [[ "$3" == "" ]]; then
-                ask "This installs the packages, do you want to proceed? [y/N]: " install_apt
-                
-                ask "This installs the packages that are not in the default repos, do \
-                you want to proceed? [y/N]: " extra_packages
-                
-                ask "This will install the config files. This will \
-                override your config files, do you want to proceed? [y/N]: " dot_files
-                
-                ask "This install the themes, do you want to proceed? [y/N]: " theming
-            else
-                echo "gnad: '$3' is not a gnad argument. See 'gnad --help'."
-            fi
+            
+            echo "Install started. If you don't see 'Install completed' means something went wrong. You can check 'logs/gnad.log' for info."
+            echo 'Installing packages...'
+            install_apt >> logs/gnad.log
+            echo 'Installing extra packages...'
+            extra_packages >> logs/gnad.log
+            echo 'Installing themes...'
+            theming >> logs/gnad.log
+            echo 'Install completed.'
             
         fi
         elif [[ "$1" == "" ]]; then

@@ -11,7 +11,7 @@ install_apt(){
     echo "Uninstalling apt packages..."
     # shellcheck disable=SC2154
     # shellcheck disable=SC2068
-    apt remove ${uninstall[@]}
+    apt remove ${uninstall[@]} -y
 
     echo 'Autoremoving...'
     apt autoremove -y

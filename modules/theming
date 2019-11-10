@@ -8,56 +8,48 @@ theming(){
     export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/1000/bus"
     
     # Install theme
-    mkdir "$USERHOME/.themes" -p
-    cd "$USERHOME/.themes/" || exit
-    
-    [[ ! -d vimix-gtk-themes ]] && git clone https://github.com/vinceliuice/vimix-gtk-themes.git
+    goto "$USERHOME/.themes" -p
+    get-extract https://github.com/vinceliuice/vimix-gtk-themes/archive/master.zip
     bash "$USERHOME/.themes/vimix-gtk-themes/Install"
-    
     sed -i 's/<property name="theme" type="string" value=".*"\/>/<property name="theme" type="string" value="vimix-light-doder"\/>/g' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml
     su - "${SUDO_USER}" -c 'xfconf-query -c xfwm4 -p /general/theme -s "vimix-light-doder"'
     
-    # Install icons & cursor
-    mkdir "$USERHOME/.icons" -p
-    cd "$USERHOME/.icons/" || exit
-    
-    wget https://github.com/vinceliuice/vimix-icon-theme/archive/master.zip
-    unzip master.zip
+    # Install icons
+    goto "$USERHOME/.icons" -p
+    get_extract https://github.com/vinceliuice/vimix-icon-theme/archive/master.zip
     bash "$USERHOME/.icons/vimix-icon-theme-master/install.sh"
     su - "${SUDO_USER}" -c "xfconf-query -c xsettings -p /Net/IconThemeName -s 'Vimix-Paper'"
+
+    # Install cursor
+    su - "${SUDO_USER}" -c 'xfconf-query -c xsettings -p /Gtk/CursorThemeName -s Breeze'
     
     # Install wallpaper
-    cd "$USERHOME/Pictures/" || exit
+    goto "$USERHOME/Pictures/"
     wget https://raw.githubusercontent.com/cristianarbe/gettrisquel.org/master/images/banner.jpg
     # shellcheck disable=SC2016
     su - "${SUDO_USER}" -c 'xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/workspace0/last-image -s "$USERHOME/Pictures/banner.jpg"'
     
     # Install panel setup
-    pkill xfconfd
-    [[ -f "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml" ]] && rm "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
-    
     cd "/tmp/gnad/modules" || exit
-    cp "xfce4-panel.xml" "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/"
     # Fix pulseaudio icon
-    cp "gtk.css" "$USERHOME/.config/gtk-3.0/"
-    # Install xfwm4
-    [[ -f "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml" ]] && rm "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml"
-    cp "xfwm4.xml" "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml"
-    [[ -f "$USERHOME/.config/xfce4/panel/whiskermenu-1.rc" ]] && rm "$USERHOME/.config/xfce4/panel/whiskermenu-1.rc"
-    cp "whiskermenu-1.rc" "$USERHOME/.config/xfce4/panel/"
-    su - "${SUDO_USER}" -c 'xfconf-query -c xsettings -p /Gtk/CursorThemeName -s Breeze'
-    unzip -o clear-sans
-    su - "${SUDO_USER}" -c 'xfconf-query -c xsettings -p /Gtk/FontName -s "Clear Sans 12"'
-    sed -i 's/<property name="title_font" type="string" value=".*"\/>/<property name="title_font" type="string" value="Clear Sans 12"\/>/g' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml
+
+    readonly XFCE_CONFIG="$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml"
+
+    force_copy "gtk.css" "$USERHOME/.config/gtk-3.0/"
+    force_copy "whiskermenu-1.rc" "$XFCE_CONFIG"
+    force_copy "xfce4-keyboard-shortcuts.xml" "$XFCE_CONFIG"
+    force_copy "xfce4-panel.xml" "$XFCE_CONFIG"
+    force_copy "xfwm4.xml" "$XFCE_CONFIG"
+
+    pkill xfconfd
     
     # Install keyboard shortcuts
-    [[ -f "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml" ]] && rm "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml"
-    cp "xfce4-keyboard-shortcuts.xml" "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml"
     
     # Install font
-    mkdir -p "$USERHOME/.fonts/"
-    cd "$USERHOME/.fonts/" || exit
-    wget -q https://www.fontsquirrel.com/fonts/download/clear-sans
+    goto "$USERHOME/.fonts/"
+    get-extract https://www.fontsquirrel.com/fonts/download/clear-sans zip
+    su - "${SUDO_USER}" -c 'xfconf-query -c xsettings -p /Gtk/FontName -s "Clear Sans 12"'
+    sed -i 's/<property name="title_font" type="string" value=".*"\/>/<property name="title_font" type="string" value="Clear Sans 12"\/>/g' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml
 
     # Make user own directories
     chown -R "${SUDO_USER}:${SUDO_USER}" "$USERHOME/.icons"
