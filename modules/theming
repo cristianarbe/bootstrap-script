@@ -2,9 +2,6 @@
 set -e
 set -x
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-cd "$DIR"
-
 readonly USERHOME="/home/$(whoami)"
 export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/1000/bus"
 
@@ -24,8 +21,6 @@ cd "$USERHOME/.icons/" || exit
 
 wget  https://dllb2.pling.com/api/files/download/id/1560239555/s/1b2d0b91b1e7cb142dc3ef463fa0f1d9aa67860741a4ffc1450d54e508df42d6ae5b1502300dd745d668b92a7ec9e294bb207bb45fd403f9a488ad28621269f3/t/1573344200/c/8ebc9c9f7acc642102530eb48aee355e71a57fd9918afc3b4696f6a8d221c1a06f000122a8ac8d1ba526c7fd920f8183f0045fc1419af1e1cb103ee3fb81d373/lt/download/Vimix-icon-theme.tar.xz
 tar -xJvf Vimix-icon-theme.tar.xz
-wget https://dllb2.pling.com/api/files/download/id/1460735269/s/3569adc85642935809b1803e00f22ac8ff3152044c13d859f3ebd6ba0697fab924c5c2b97496d6689a554009c73ee016fc92c8c13fb1a11cb12e78b5db1359a9/t/1573339031/c/8ebc9c9f7acc642102530eb48aee355e71a57fd9918afc3b4696f6a8d221c1a06f000122a8ac8d1ba526c7fd920f8183f0045fc1419af1e1cb103ee3fb81d373/lt/download/165371-Breeze.tar.gz
-tar -xzvf 165371-Breeze.tar.gz
 
 xfconf-query -c xsettings -p /Net/IconThemeName -s "Vimix-Paper"
 
@@ -33,19 +28,20 @@ xfconf-query -c xsettings -p /Net/IconThemeName -s "Vimix-Paper"
 cd "$USERHOME/Pictures/" || exit
 wget https://raw.githubusercontent.com/cristianarbe/gettrisquel.org/master/images/banner.jpg
 xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/workspace0/last-image -s "$USERHOME/Pictures/banner.jpg"
+cd "$DIR" || exit
 
 # Install panel setup
 pkill xfconfd
 [[ -f "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml" ]] && rm "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
 
-cp "xfce4-panel.xml" "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/"
+cp "modules/xfce4-panel.xml" "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/"
 # Fix pulseaudio icon
-cp "gtk.css" "$USERHOME/.config/gtk-3.0/"
+cp "modules/gtk.css" "$USERHOME/.config/gtk-3.0/"
 # Install xfwm4
 [[ -f "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml" ]] && rm "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml"
-cp "xfwm4.xml" "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml"
+cp "modules/xfwm4.xml" "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml"
 [[ -f "$USERHOME/.config/xfce4/panel/whiskermenu-1.rc" ]] && rm "$USERHOME/.config/xfce4/panel/whiskermenu-1.rc"
-cp "whiskermenu-1.rc" "$USERHOME/.config/xfce4/panel/"
+cp "modules/whiskermenu-1.rc" "$USERHOME/.config/xfce4/panel/"
 xfconf-query -c xsettings -p /Gtk/CursorThemeName -s Breeze
 
 # Install font
@@ -58,7 +54,7 @@ xfconf-query -c xfwm4 -p /general/title_font -s "Clear Sans 12"
 
 # Install keyboard shortcuts
 rm "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml"
-cp "$DIR/xfce4-keyboard-shortcuts.xml" "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml"
+cp "modules/xfce4-keyboard-shortcuts.xml" "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml"
 
 xfce4-panel -r
 /usr/lib64/xfce4/xfconf/xfconfd &> /dev/null &

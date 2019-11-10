@@ -7,7 +7,8 @@ for file in modules/*.sh; do
 done
 
 FILE="$2"
-export INITIALPATH="${FILE%/*}"
+export CONFIGPATH="${FILE%/*}"
+SOURCEPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 main(){
     set -e
@@ -48,10 +49,11 @@ main(){
                 ask "This will install the config files. This will \
                 override your config files, do you want to proceed? [y/N]: " dot_files
                 
-                cd "$INITIALPATH" || exit
-                cp ./* /tmp/gnad/
+                mkdir -p /tmp/gnad/
+                cp "$SOURCEPATH/*" /tmp/gnad/ -r
+                cd /tmp/gnad
                 # shellcheck disable=SC2016
-                ask "This install the themes, do you want to proceed? [y/N]: " 'su - ${SUDO_USER} -c "source /tmp/gnad/theming"'
+                ask "This install the themes, do you want to proceed? [y/N]: " 'su - ${SUDO_USER} -c "source modules/theming"'
             else
                 echo "gnad: '$3' is not a gnad argument. See 'gnad --help'."
             fi

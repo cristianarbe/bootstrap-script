@@ -3,6 +3,7 @@ FILE="$*"
 SCRIPTPATH="${FILE%/*}"
 
 export install=(
+    breeze-cursor-theme
     curl
     filezilla
     firefox
