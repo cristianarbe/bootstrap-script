@@ -50,7 +50,7 @@ main(){
                 override your config files, do you want to proceed? [y/N]: " dot_files
                 
                 mkdir -p /tmp/gnad/
-                cp "$SOURCEPATH/*" /tmp/gnad/ -r
+                cp "$SOURCEPATH"/* /tmp/gnad/ -r
                 # shellcheck disable=SC2016
                 ask "This install the themes, do you want to proceed? [y/N]: " 'su - ${SUDO_USER} -c "source /tmp/gnad/modules/theming"'
             else

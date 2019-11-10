@@ -25,7 +25,7 @@ bash vimix-icon-theme-master/install.sh
 xfconf-query -c xsettings -p /Net/IconThemeName -s "Vimix-Paper"
 
 # Install wallpaper
-akicd "$USERHOME/Pictures/" || exit
+cd "$USERHOME/Pictures/" || exit
 wget https://raw.githubusercontent.com/cristianarbe/gettrisquel.org/master/images/banner.jpg
 xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/workspace0/last-image -s "$USERHOME/Pictures/banner.jpg"
 
@@ -34,14 +34,14 @@ pkill xfconfd
 [[ -f "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml" ]] && rm "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
 
 cd "/tmp/gnad/modules" || exit
-cp "modules/xfce4-panel.xml" "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/"
+cp "xfce4-panel.xml" "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/"
 # Fix pulseaudio icon
-cp "modules/gtk.css" "$USERHOME/.config/gtk-3.0/"
+cp "gtk.css" "$USERHOME/.config/gtk-3.0/"
 # Install xfwm4
 [[ -f "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml" ]] && rm "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml"
-cp "modules/xfwm4.xml" "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml"
+cp "xfwm4.xml" "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml"
 [[ -f "$USERHOME/.config/xfce4/panel/whiskermenu-1.rc" ]] && rm "$USERHOME/.config/xfce4/panel/whiskermenu-1.rc"
-cp "modules/whiskermenu-1.rc" "$USERHOME/.config/xfce4/panel/"
+cp "whiskermenu-1.rc" "$USERHOME/.config/xfce4/panel/"
 xfconf-query -c xsettings -p /Gtk/CursorThemeName -s Breeze
 
 # Install font
@@ -50,11 +50,11 @@ cd "$USERHOME/.fonts/" || exit
 wget -q https://www.fontsquirrel.com/fonts/download/clear-sans
 unzip -o clear-sans
 xfconf-query -c xsettings -p /Gtk/FontName -s "Clear Sans 12"
-xfconf-query -c xfwm4 -p /general/title_font -s "Clear Sans 12"
+sed -i 's/<property name="title_font" type="string" value=".*"\/>/<property name="title_font" type="string" value="Clear Sans 12"\/>/g' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml
 
 # Install keyboard shortcuts
-rm "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml"
-cp "modules/xfce4-keyboard-shortcuts.xml" "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml"
+[[ -f "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml" ]] && rm "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml"
+cp "xfce4-keyboard-shortcuts.xml" "$USERHOME/.config/xfce4/xfconf/xfce-perchannel-xml"
 
 xfce4-panel -r
 /usr/lib64/xfce4/xfconf/xfconfd &> /dev/null &
