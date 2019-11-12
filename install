@@ -1,2 +1,8 @@
-#!/bin/bash
-wget https://github.com/cristianarbe/gnad/archive/master.zip && unzip master.zip && cd gnad-master && chmod +x gnad
+#!/usr/bin/env bash
+#
+# Installation file for GNad
+
+wget https://github.com/cristianarbe/gnad/archive/master.zip
+unzip master.zip
+mv gnad-master /opt/gnad
+ln -s /usr/loca/bin /opt/gnad/gnad

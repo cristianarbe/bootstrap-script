@@ -1,52 +1,37 @@
-#!/bin/bash
+#!/usr/bin/env bash
+#
+# Executable file of GNad
+# TODO(cristianarbe): Always check return values and give informative return values.
 
-main(){
-    
-    if [[ $EUID -ne 0 ]]; then
-        echo "This script must be run as root"
-        exit 1
-    fi
-    
-    # echo the ran commands
-    set -x
-    # if something fails, exit
-    set -e
-    
-    # Load all modules
-    for file in modules/*.sh; do
-        # shellcheck disable=SC1090
-        source "$file"
-    done
-    
-    CONFIGFILE="$2"
-    export CONFIGPATH="${CONFIGFILE%/*}"
-    SOURCEPATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-    export SOURCEPATH
-    
-    if [[ "$1" == "install" ]]; then
-        if [[ "$2" == "" ]]; then
-            echo "Nothing specified."
-        else
-            # shellcheck disable=SC1090
-            source "$2" "$2"
-            
-            [[ ! -d logs ]] && mkdir logs
-            
-            echo "Install started. If you don't see 'Install completed' means something went wrong. You can check 'logs/gnad.log' for info."
-            echo 'Installing packages...'
-            install_apt >> logs/gnad.log
-            echo 'Installing extra packages...'
-            extra_packages >> logs/gnad.log
-            echo 'Installing themes...'
-            theming >> logs/gnad.log
-            echo 'Install completed.'
-            
-        fi
-        elif [[ "$1" == "" ]]; then
-        echo "usage: gnad <command> [<args>]"
-    else
-        echo "gnad: '$2' is not a gnad command. See 'gnad --help'."
-    fi
-}
+readonly CONFIG_FILE="$1"
+readonly CONFIG_FILE_PATH="${CONFIG_FILE%/*}"
+readonly SOURCEPATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
-main "$@"
+set -x -e
+
+[[ $EUID -ne 0 ]] && echo "This script must be run as root" && exit 1
+
+# Load all modules
+for file in modules/*.sh; do
+    # shellcheck disable=SC1090
+    source "$file"
+done
+
+if [[ "$1" == "-h" && "$1" == "--help" ]]; then
+    echo "usage: gnad [FILE]"
+elif [[ -f "$1" ]]; then
+    # shellcheck disable=SC1090
+    source "$2" "$2"
+
+    [[ ! -d logs ]] && mkdir logs
+
+    echo 'Installing packages...'
+    install_apt_packages >>logs/gnad.log
+    echo 'Installing extra packages...'
+    install_extra_packages >>logs/gnad.log
+    echo 'Installing themes...'
+    setup_appearance >>logs/gnad.log
+    echo 'Install completed.'
+else
+    echo "gnad: '$2': No such file or directory."
+fi

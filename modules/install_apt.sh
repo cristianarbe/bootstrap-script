@@ -1,18 +1,27 @@
-#!/bin/bash
+#!/usr/bin/env bash
+#
+# Installs the apt packages
 
-install_apt(){
-    echo 'Updating cache...'
+#######################################
+# Installs the list of apt packages
+# from the config file
+# Globals:
+#   INSTALL
+#   UNINSTALL
+# Arguments:
+#   None
+# Returns:
+#   None
+#######################################
+install_apt_packages(){
     apt update
-    echo "Installing apt packages..."
     # shellcheck disable=SC2154
     # shellcheck disable=SC2068
-    apt install ${install[@]} -y
+    apt install ${INSTALL[@]} -y
     
-    echo "Uninstalling apt packages..."
     # shellcheck disable=SC2154
     # shellcheck disable=SC2068
-    apt remove ${uninstall[@]} -y
-
-    echo 'Autoremoving...'
+    apt remove ${UNINSTALL[@]} -y
+    
     apt autoremove -y
 }
