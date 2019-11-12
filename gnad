@@ -5,21 +5,26 @@
 
 readonly CONFIG_FILE="$1"
 readonly CONFIG_FILE_PATH="${CONFIG_FILE%/*}"
+readonly SCRIPT_PATH="$(
+    cd "$(dirname "$0")"
+    pwd -P
+)"
+readonly LIBRARIES="$SCRIPT_PATH/libraries"
 
 set -e
 
-# Load all modules
-for file in modules/*.sh; do
+# Load all libraries
+for library in "$LIBRARIES"/*.sh; do
     # shellcheck disable=SC1090
-    source "$file"
+    source "$library"
 done
 
 case $1 in
 "-h" | "--help")
-    cat modules/help.txt
+    cat "$LIBRARIES"/help.txt
     ;;
 "--version")
-    cat modules/version.txt
+    cat "$LIBRARIES"/version.txt
     ;;
 "install")
     [[ $EUID -ne 0 ]] && echo "This program must be run as root" && exit 1
@@ -36,13 +41,22 @@ case $1 in
         echo 'Installing themes...'
         setup_appearance >>logs/gnad.log
         echo 'Install completed.'
+        read -pr "You need to reboot now for the changes to take effect. \
+Please save your work and press Enter to reboot"
+        reboot
     else
         echo "gnad: missing file. See 'gnad --help' for more info."
     fi
     ;;
 "get")
-    if [[ -z "$2" ]]; then
-        err ":)"
+    if [[ -n "$2" ]]; then
+        readonly REMOTE_CONFIG="https://raw.githubusercontent.com/cristianarbe/gnad/master/config.sh"
+        url_valid=$(url_exists "$REMOTE_CONFIG")
+        if [[ $url_valid == "true" ]]; then
+            git clone --depth=1 https://github.com/"$2"
+        else
+            echo "fatal: config.sh file on '$2' not found"
+        fi
     else
         echo "gnad: missing file. See 'gnad --help' for more info."
     fi

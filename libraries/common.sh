@@ -36,7 +36,6 @@ common::extract() {
     *.tbz2) tar xjf "$1" ;;
     *.tgz) tar xzf "$1" ;;
     *.zip) unzip "$1" ;;
-    *.Z) uncompress "$1" ;;
     *.7z) 7za e "$1" ;;
     *.tar.xz) tar xf "$1" ;;
     *) err "'$1' cannot be extracted" ;;
@@ -71,7 +70,46 @@ common::get_extract() {
 # Returns:
 #   Error message through stderr
 #######################################
-err() {
-    # shellcheck disable=SC2145
-    echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@" >&2
+# shellcheck disable=SC2145
+err() { echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@" >&2; }
+
+#######################################
+# Checks if the remote file exists
+# file
+# Globals:
+#   None
+# Arguments:
+#   Url
+# Returns:
+#   True or false
+#######################################
+url_exists() {
+    local response
+    response="$(curl -s "$1")"
+    [[ $response == *404* ]] && echo false || echo true
+}
+
+#######################################
+# Updates an xfce property
+# Globals:
+#   SUDO_USER
+# Arguments:
+#   Property
+#   Value
+# Returns:
+#   None
+#######################################
+common::xf_update() {
+
+    case $1 in
+    theme) channel="-c xfwm4 -p /general/theme -s" ;;
+    icon-theme) channel="-c xsettings -p /Net/IconThemeName -s" ;;
+    cursor-theme) channel="-c xsettings -p /Gtk/CursorThemeName -s" ;;
+    wallpaper) channel="-c xfce4-desktop -p /backdrop/screen0/monitor0/workspace0/last-image -s" ;;
+    font) channel="-c xsettings -p /Gtk/FontName -s" ;;
+    *) err "XFCE property does not exist" ;;
+    esac
+
+    su - "${SUDO_USER}" -c "xfconf-query $channel $2"
+
 }
