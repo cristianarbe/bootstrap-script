@@ -5,11 +5,8 @@
 
 readonly CONFIG_FILE="$1"
 readonly CONFIG_FILE_PATH="${CONFIG_FILE%/*}"
-readonly SOURCEPATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 
-set -x -e
-
-[[ $EUID -ne 0 ]] && echo "This script must be run as root" && exit 1
+set -e
 
 # Load all modules
 for file in modules/*.sh; do
@@ -17,21 +14,40 @@ for file in modules/*.sh; do
     source "$file"
 done
 
-if [[ "$1" == "-h" && "$1" == "--help" ]]; then
-    echo "usage: gnad [FILE]"
-elif [[ -f "$1" ]]; then
+case $1 in
+"-h" | "--help")
+    cat modules/help.txt
+    ;;
+"--version")
+    cat modules/version.txt
+    ;;
+"install")
+    [[ $EUID -ne 0 ]] && echo "This program must be run as root" && exit 1
     # shellcheck disable=SC1090
-    source "$2" "$2"
+    if [[ -z "$2" ]]; then
+        source "$2"
 
-    [[ ! -d logs ]] && mkdir logs
+        [[ ! -d logs ]] && mkdir logs
 
-    echo 'Installing packages...'
-    install_apt_packages >>logs/gnad.log
-    echo 'Installing extra packages...'
-    install_extra_packages >>logs/gnad.log
-    echo 'Installing themes...'
-    setup_appearance >>logs/gnad.log
-    echo 'Install completed.'
-else
-    echo "gnad: '$2': No such file or directory."
-fi
+        echo 'Installing packages...'
+        install_apt_packages >>logs/gnad.log
+        echo 'Installing extra packages...'
+        install_extra_packages >>logs/gnad.log
+        echo 'Installing themes...'
+        setup_appearance >>logs/gnad.log
+        echo 'Install completed.'
+    else
+        echo "gnad: missing file. See 'gnad --help' for more info."
+    fi
+    ;;
+"get")
+    if [[ -z "$2" ]]; then
+        err ":)"
+    else
+        echo "gnad: missing file. See 'gnad --help' for more info."
+    fi
+    ;;
+*)
+    echo "gnad: '$1': invalid option. See 'gnad --help' for more info."
+    ;;
+esac
