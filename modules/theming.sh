@@ -101,8 +101,18 @@ install_font() {
         ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml
 }
 
+#######################################
+# Install all the elements of the
+# appearance
+# Globals:
+#   USER_HOME
+#   SUDO_USER
+# Arguments:
+#   None
+# Returns:
+#   None
+#######################################
 setup_appearance() {
-
     pkill xfconfd
 
     install_theme
