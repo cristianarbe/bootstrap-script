@@ -22,7 +22,7 @@ $ ln -s /usr/local/bin /opt/gnad/gnad
 
 Run GNad with:
 ```sh
-$ sudo ./gnad install <config file>
+$ sudo gnad install [CONFIG FILE]
 ```
 
 ## Feedback
