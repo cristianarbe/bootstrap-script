@@ -15,7 +15,7 @@ Get the last version with:
 $ wget https://github.com/cristianarbe/gnad/archive/master.zip
 $ unzip master.zip
 $ mv gnad-master /opt/gnad
-$ ln -s /usr/loca/bin /opt/gnad/gnad
+$ ln -s /usr/local/bin /opt/gnad/gnad
 ```
 
 ## Usage
