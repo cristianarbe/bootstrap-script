@@ -1,6 +1,6 @@
 # GNad
 
-GNad's Not A Distro. Grabs a config file and setups your workstation for you. Only working with Fedora at the moment.
+GNad's Not A Distro. Grabs a config file and setups your workstation for you. Only working with Ubuntu.
 
 ### Prerequisites
 
