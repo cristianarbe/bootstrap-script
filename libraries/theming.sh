@@ -96,11 +96,10 @@ setup_appearance() {
     pkill xfconfd
 
     \cp -rf .config "$USER_HOME"/
-    install_theme
-    install_icons
+    for action in theme icons wallpaper font; do
+        install_$action
+    done
     common::xf_update cursor-theme Breeze
-    install_wallpaper
-    install_font
 
     # Make user own directories
     for folder in icons themes; do

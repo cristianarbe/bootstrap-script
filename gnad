@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 #
 # Executable file of GNad
-# TODO(cristianarbe): Always check return values and give informative return values.
+# TODO(cristianarbe): Always check return values and give informative return
+# values.
 
 readonly CONFIG_FILE="$1"
 readonly CONFIG_FILE_PATH="${CONFIG_FILE%/*}"
@@ -20,11 +21,8 @@ for library in "$LIBRARIES"/*.sh; do
 done
 
 case $1 in
-"-h" | "--help")
-    cat "$LIBRARIES"/help.txt
-    ;;
-"--version")
-    cat "$LIBRARIES"/version.txt
+"--version" | "--help")
+    cat "$LIBRARIES"/"${1/--/}"
     ;;
 "install")
     [[ $EUID -ne 0 ]] && echo "This program must be run as root" && exit 1

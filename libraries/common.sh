@@ -38,7 +38,7 @@ common::extract() {
     *.zip) unzip "$1" ;;
     *.7z) 7za e "$1" ;;
     *.tar.xz) tar xf "$1" ;;
-    *) err "'$1' cannot be extracted" ;;
+    *) common::err "'$1' cannot be extracted" ;;
     esac
 }
 
@@ -71,7 +71,7 @@ common::get_extract() {
 #   Error message through stderr
 #######################################
 # shellcheck disable=SC2145
-err() { echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@" >&2; }
+common::err() { echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $@" >&2; }
 
 #######################################
 # Checks if the remote file exists

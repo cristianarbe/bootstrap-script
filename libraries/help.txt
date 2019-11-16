@@ -7,4 +7,4 @@ install         install a config file on your system
 
 Optional arguments:
   --version     show GNad version and exit
-  -h, --help    show command help
+  --help    show command help
