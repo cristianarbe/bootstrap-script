@@ -12,10 +12,8 @@ $ sudo apt update && sudo apt install curl -y
 
 Get the last version with:
 ```sh
-$ wget https://github.com/cristianarbe/gnad/archive/master.zip
-$ unzip master.zip
-$ mv gnad-master /opt/gnad
-$ ln -s /usr/local/bin /opt/gnad/gnad
+$ sudo git clone --depth 1 https://github.com/cristianarbe/gnad /opt/gnad/
+$ ln -s /usr/local/bin/gnad /opt/gnad/gnad
 ```
 
 ## Usage
