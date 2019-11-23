@@ -1,6 +1,6 @@
 # GNad
 
-GNad's Not A Distro. Grabs a config file and setups your workstation for you.
+GNad's Not A Distro. Manages bootstrap scripts.
 
 ### Prerequisites
 
