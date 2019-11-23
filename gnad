@@ -1,8 +1,8 @@
-#!/bin/env bash
+#!/bin/env sh
 #
 # Manage bootstrap scripts
 
-readonly PROFILE_NAME="${2/\//-}"
+readonly PROFILE_NAME="$(echo "$2" | sed 's/\//-/g')"
 readonly CONFIG_PATH="${HOME}/.config/gnad/profiles"
 readonly PROFILE_PATH="${CONFIG_PATH}/${PROFILE_NAME}"
 
@@ -19,7 +19,7 @@ readonly PROFILE_PATH="${CONFIG_PATH}/${PROFILE_NAME}"
 get(){
   mkdir -pv "${PROFILE_PATH}"
   git clone --depth 1 "https://github.com/${1}" "${PROFILE_PATH}"
-  if [[ -d ${PROFILE_PATH}/.git ]]; then
+  if [ -d "${PROFILE_PATH}"/.git ]; then
     echo "Profile installed"
     return 0
   else
@@ -67,11 +67,11 @@ remove(){
 #   None
 #######################################
 update(){
-  local answer
-  read -rp "This will override any change you have made to the profile, do you \
-  want to continue? (y/N): " answer
+  printf "This will override any change you have made to the profile, do you \
+want to continue? (y/N): "
+  read -r answer
 
-  [[ ${answer} != "y" ]] && return
+  [ "${answer}" != "y" ] && return
 
   for profile in "${CONFIG_PATH}"/*; do
     cd "${CONFIG_PATH}/${profile}" || exit
