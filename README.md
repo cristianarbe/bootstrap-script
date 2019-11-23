@@ -4,7 +4,8 @@ GNad's Not A Distro. Grabs a config file and setups your workstation for you.
 
 ### Prerequisites
 
-None.
+* A POSIX compliant shell
+* git
 
 ```
 ### Installing
