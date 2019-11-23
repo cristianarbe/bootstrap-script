@@ -13,7 +13,7 @@ $ sudo apt update && sudo apt install curl -y
 Get the last version with:
 ```sh
 $ sudo git clone --depth 1 https://github.com/cristianarbe/gnad /opt/gnad/
-$ ln -s /usr/local/bin/gnad /opt/gnad/gnad
+$ sudo ln -s /usr/local/bin/gnad /opt/gnad/gnad
 ```
 
 ## Usage
