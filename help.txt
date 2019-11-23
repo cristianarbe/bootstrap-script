@@ -1,0 +1,9 @@
+apw
+Usage: apw [options] command
+
+apw is a commandline wrapper for apt
+
+Commands:
+  install - install packages
+  remove - remove packages
+  upgrade - upgrade the system by installing/upgrading packages

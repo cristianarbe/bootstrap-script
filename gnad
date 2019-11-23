@@ -66,9 +66,9 @@ remove(){
 # Returns:
 #   None
 #######################################
-update(){
-  printf "This will override any change you have made to the profile, do you \
-want to continue? (y/N): "
+upgrade(){
+  echo "This will override any change you have made to the profile, do you want"
+  echo "want to continue? (y/N): "
   read -r answer
 
   [ "${answer}" != "y" ] && return
@@ -79,4 +79,30 @@ want to continue? (y/N): "
   done
 }
 
-"$@"
+help(){
+  echo "gnad"
+  echo "Usage: gnad command [profile]"
+  echo ""
+  echo "gnad is a bootstrap scripts manager"
+  echo ""
+  echo "Commands:"
+  echo "  get - get script from github"
+  echo "  run- run a script"
+  echo "  list - list installed scripts"
+  echo "  remove - remove a script"
+  echo "  upgrade - upgrade all the scripts"
+  echo "  help - shows this help"
+}
+
+main(){
+  case "$@" in
+    get|run|list|remove|upgrade|help)
+      "$@"
+      ;;
+    *)
+      help
+      ;;
+  esac
+}
+
+main "$@"
