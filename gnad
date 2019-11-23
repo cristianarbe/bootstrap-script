@@ -66,9 +66,9 @@ remove(){
 # Returns:
 #   None
 #######################################
-upgrade(){
-  echo "This will override any change you have made to the profile, do you want"
-  echo "want to continue? (y/N): "
+update(){
+  printf "This will override any change you have made to the profile, do you \n"
+  printf "want to continue? (y/N): "
   read -r answer
 
   [ "${answer}" != "y" ] && return
@@ -77,6 +77,9 @@ upgrade(){
     cd "${CONFIG_PATH}/${profile}" || exit
     git pull
   done
+
+  printf "Updated all scripts. Do 'gnad run [script]' if you want to \n"
+  printf "upgrade. Note that this will override all your settings!"
 }
 
 help(){
@@ -90,13 +93,13 @@ help(){
   echo "  run- run a script"
   echo "  list - list installed scripts"
   echo "  remove - remove a script"
-  echo "  upgrade - upgrade all the scripts"
+  echo "  update - update all the scripts"
   echo "  help - shows this help"
 }
 
 main(){
   case "$@" in
-    get|run|list|remove|upgrade|help)
+    get|run|list|remove|update|help)
       "$@"
       ;;
     *)

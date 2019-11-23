@@ -1,0 +1,1 @@
+cat gnad  | grep -v "#" | grep -ve "^$" | wc -l
