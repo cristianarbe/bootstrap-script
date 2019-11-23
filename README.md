@@ -4,9 +4,8 @@ GNad's Not A Distro. Grabs a config file and setups your workstation for you. On
 
 ### Prerequisites
 
-Run this before installing:
-```sh
-$ sudo apt update && sudo apt install curl -y
+None.
+
 ```
 ### Installing
 
