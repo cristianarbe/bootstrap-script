@@ -2,7 +2,7 @@
 #
 # Manage bootstrap scripts
 
-readonly PROFILE_NAME="$(echo "$2" | sed 's/\//-/g')"
+readonly PROFILE_NAME="$(printf '%s' "$2" | tr '/' '-')"
 readonly CONFIG_PATH="${HOME}/.config/gnad/profiles"
 readonly PROFILE_PATH="${CONFIG_PATH}/${PROFILE_NAME}"
 
@@ -39,7 +39,7 @@ get(){
 #######################################
 run(){
   chmod +x "${PROFILE_PATH}/install"
-  if bash "${PROFILE_PATH}/install"; then
+  if "${PROFILE_PATH}"/install; then
     echo "Script ran successfully"
     return 0
   else
