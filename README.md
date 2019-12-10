@@ -2,6 +2,8 @@
 
 GNad's Not A Distro. Manages bootstrap scripts.
 
+**DISCLAIMER**: This software is in development, therefore it should only be used for testing purposes.
+
 ### Prerequisites
 
 * None
@@ -20,13 +22,6 @@ $ chmod a+x gnad*
 and run!
 ```
 $ ./gnad
-```
-
-## Usage
-
-Run GNad with:
-```sh
-$ sudo gnad install [CONFIG FILE]
 ```
 
 ## Feedback
