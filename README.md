@@ -4,15 +4,22 @@ GNad's Not A Distro. Manages bootstrap scripts.
 
 ### Prerequisites
 
-* A POSIX compliant shell
-* git
+* None
 
 ### Installing
 
-Get the last version with:
-```sh
-$ sudo git clone --depth 1 https://github.com/cristianarbe/gnad /opt/gnad/
-$ sudo ln -s /usr/local/bin/gnad /opt/gnad/gnad
+Get the latest version from the [release page](https://github.com/cristianarbe/gnad/releases).
+
+From your terminal:
+
+* Make it executable
+
+```
+$ chmod a+x gnad*
+```
+and run!
+```
+$ ./gnad
 ```
 
 ## Usage
