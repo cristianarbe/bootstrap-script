@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/cristianarbe/gnad/common"
-	"github.com/cristianarbe/gnad/get"
+	"github.com/cristianarbe/gnad/pkg/common"
+	"github.com/cristianarbe/gnad/pkg/get"
 	"os"
 	"strconv"
 )

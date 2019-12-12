@@ -3,7 +3,7 @@ package get
 import (
 	"errors"
 	"fmt"
-	"github.com/cristianarbe/gnad/common"
+	"github.com/cristianarbe/gnad/pkg/common"
 	"os"
 	"os/exec"
 )
