@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/cristianarbe/gnad/common"
-	"github.com/cristianarbe/gnad/config"
+	"github.com/cristianarbe/gnad/get"
 	"os"
 	"strconv"
 )
@@ -23,22 +23,21 @@ func main() {
 	}
 
 	argsVerb := os.Args[1]
+	argsObject := ""
 
 	if numberOfArguments == 1 {
 		log("The verb is " + argsVerb + " and there is no object")
 	} else {
-		argsObject := os.Args[2]
+		argsObject = os.Args[2]
 		log("The verb is " + argsVerb + " and the object is " + argsObject)
 	}
 
 	switch argsVerb {
 	case "get":
-		log("user chose get")
-		if !common.FileFolderExists(config.GnadHome) {
-			log(config.GnadHome + " does not exist")
-			log("creating " + config.GnadHome)
+		if numberOfArguments == 2 {
+			get.Main(argsObject)
 		} else {
-			log(config.GnadHome + " found")
+			log("Incorrect number of arguments.")
 		}
 	default:
 		log(argsVerb + " not recognized")

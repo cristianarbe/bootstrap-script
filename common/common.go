@@ -1,11 +1,15 @@
 package common
 
 import (
+	"errors"
 	"fmt"
 	"github.com/cristianarbe/gnad/config"
 	"os"
+	"strings"
 	"time"
 )
+
+var log = Log
 
 func FileFolderExists(path string) bool {
 	_, os_stat_error := os.Stat(path)
@@ -25,4 +29,47 @@ func Log(message string) {
 		currentTime := time.Now().Format("2006-01-02 15:04:05")
 		fmt.Printf("[%v] %s\n", currentTime, message)
 	}
+}
+
+func RemoveHttp(url string) string {
+	url = strings.Replace(url, "https://", "", -1)
+	url = strings.Replace(url, "http://", "", -1)
+	return url
+}
+
+func SplitUrl(url string) []string {
+	out := strings.SplitN(url, "/", -1)
+	return out
+}
+
+func InitGnadHome() error {
+	if !FileFolderExists(config.GnadHome) {
+		log(config.GnadHome + " does not exist")
+		log("creating " + config.GnadHome)
+		err := os.MkdirAll(config.GnadHome, 0700)
+		if err != nil {
+			return errors.New("Could not create directory")
+		}
+		log("Directory created")
+	} else {
+		log(config.GnadHome + " found")
+	}
+
+	return nil
+
+}
+
+func CreateRecursiveDir(url_path []string) (string, error) {
+	absolute_path := config.GnadHome
+	for _, c := range url_path {
+		absolute_path = absolute_path + "/" + c
+		err := os.MkdirAll(absolute_path, 0700)
+		if err != nil {
+			return "", errors.New("Failed to create directory")
+		} else {
+			log("Created " + absolute_path)
+		}
+	}
+
+	return absolute_path, nil
 }

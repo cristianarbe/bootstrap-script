@@ -1,5 +1,5 @@
 package config
 
 const Debug = true
-const UserHome = "C:\\Users\\cariza"
-const GnadHome = UserHome + "\\.cache\\gnad"
+const UserHome = "/home/cariza"
+const GnadHome = UserHome + "/.cache/gnad"
