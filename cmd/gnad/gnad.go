@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/cristianarbe/gnad/pkg/common"
 	"github.com/cristianarbe/gnad/pkg/get"
+	"github.com/cristianarbe/gnad/pkg/list"
 	"os"
 	"strconv"
 )
@@ -36,6 +37,12 @@ func main() {
 	case "get":
 		if numberOfArguments == 2 {
 			get.Main(argsObject)
+		} else {
+			log("Incorrect number of arguments.")
+		}
+	case "ls":
+		if numberOfArguments == 1 {
+			list.Main()
 		} else {
 			log("Incorrect number of arguments.")
 		}

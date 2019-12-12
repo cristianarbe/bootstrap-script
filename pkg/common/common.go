@@ -7,6 +7,7 @@ import (
 	"os"
 	"strings"
 	"time"
+	"path/filepath"
 )
 
 var log = Log
@@ -72,4 +73,27 @@ func CreateRecursiveDir(url_path []string) (string, error) {
 	}
 
 	return absolute_path, nil
+}
+
+func ListRecursive(inputPath string) ([]string, error){
+	var files []string
+	filepath.Walk(inputPath, func(file string, info os.FileInfo, err error) error {
+		files = append(files,file)
+		return nil
+	})
+	return files, nil
+}
+
+func FindInDir(inputPath string, searchTerm string) ([]string, error){
+	allFiles,_ := ListRecursive(inputPath)
+	var filesMatching []string
+	for _,c := range allFiles {
+		splitFile := SplitUrl(c)
+		fileName := splitFile[len(splitFile)-1]
+		if fileName == searchTerm {
+			filesMatching=append(filesMatching, c)
+		}
+	}
+
+	return filesMatching, nil
 }
