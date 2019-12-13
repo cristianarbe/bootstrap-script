@@ -1,33 +1,29 @@
 package common
 
 import (
-	"errors"
 	"fmt"
 	"github.com/cristianarbe/gnad/config"
 	"os"
+	"path/filepath"
 	"strings"
 	"time"
-	"path/filepath"
 )
 
-var log = Log
+func FileFolderExists(path string) (bool, error) {
+	_, osStatError := os.Stat(path)
 
-func FileFolderExists(path string) bool {
-	_, os_stat_error := os.Stat(path)
-	//fmt.Println(os_stat_error)
-	error_is_doesnt_exist := os.IsNotExist(os_stat_error)
-	//fmt.Println(error_is_doesnt_exist)
+	errorIsDoesntExist := os.IsNotExist(osStatError)
 
-	if error_is_doesnt_exist {
-		return false
+	if errorIsDoesntExist {
+		return false, nil
 	} else {
-		return true
+		return true, nil
 	}
 }
 
 func Log(message string) {
 	if config.Debug {
-		currentTime := time.Now().Format("2006-01-02 15:04:05")
+		currentTime := time.Now().Format("2006-01-02 15:04:05.000000")
 		fmt.Printf("[%v] %s\n", currentTime, message)
 	}
 }
@@ -43,57 +39,88 @@ func SplitUrl(url string) []string {
 	return out
 }
 
-func InitGnadHome() error {
-	if !FileFolderExists(config.GnadHome) {
-		log(config.GnadHome + " does not exist")
-		log("creating " + config.GnadHome)
+func InitGnadHome(){
+	exists, err := FileFolderExists(config.GnadHome)
+	
+	if err != nil {
+		Log(err.Error())
+		os.Exit(1)
+	}
+
+	if !exists {
+
+		Log(config.GnadHome + " does not exist, creating it")
+
 		err := os.MkdirAll(config.GnadHome, 0700)
+
 		if err != nil {
-			return errors.New("Could not create directory")
+			Log(err.Error())
+			os.Exit(1)
 		}
-		log("Directory created")
+
+		Log("Directory created")
 	} else {
-		log(config.GnadHome + " found")
+		Log(config.GnadHome + " found")
 	}
 
-	return nil
-
+	return
 }
 
-func CreateRecursiveDir(url_path []string) (string, error) {
-	absolute_path := config.GnadHome
-	for _, c := range url_path {
-		absolute_path = absolute_path + "/" + c
-		err := os.MkdirAll(absolute_path, 0700)
+func CreateRecursiveDir(urlPath []string) (string) {
+	absolutePath := config.GnadHome
+	for _, c := range urlPath {
+		absolutePath = absolutePath + "/" + c
+		err := os.MkdirAll(absolutePath, 0700)
 		if err != nil {
-			return "", errors.New("Failed to create directory")
+			Log(err.Error())
+			os.Exit(1)
 		} else {
-			log("Created " + absolute_path)
+			Log("Created " + absolutePath)
 		}
 	}
 
-	return absolute_path, nil
+	return absolutePath
 }
 
-func ListRecursive(inputPath string) ([]string, error){
+func ListRecursive(inputPath string) ([]string, error) {
 	var files []string
 	filepath.Walk(inputPath, func(file string, info os.FileInfo, err error) error {
-		files = append(files,file)
+		files = append(files, file)
 		return nil
 	})
 	return files, nil
 }
 
-func FindInDir(inputPath string, searchTerm string) ([]string, error){
-	allFiles,_ := ListRecursive(inputPath)
+func FindInDir(inputPath string, searchTerm string) ([]string) {
+	allFiles, err := ListRecursive(inputPath)
+
+	if err != nil {
+		Log(err.Error())
+		os.Exit(1)
+	}
+
 	var filesMatching []string
-	for _,c := range allFiles {
+	for _, c := range allFiles {
 		splitFile := SplitUrl(c)
 		fileName := splitFile[len(splitFile)-1]
 		if fileName == searchTerm {
-			filesMatching=append(filesMatching, c)
+			filesMatching = append(filesMatching, c)
 		}
 	}
 
-	return filesMatching, nil
+	return filesMatching
+}
+
+func ListPackages() ([]string, error) {
+	packages := FindInDir(config.GnadHome, "main")
+
+	var installedPackages []string
+
+	for _, packageName := range packages {
+		packageName = strings.Replace(packageName, config.GnadHome+"/", "", -1)
+		packageName = strings.Replace(packageName, "/main", "", -1)
+		installedPackages = append(installedPackages, packageName)
+	}
+
+	return installedPackages, nil
 }

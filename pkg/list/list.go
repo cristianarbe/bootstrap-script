@@ -1,18 +1,24 @@
 package list
 
 import (
-	"github.com/cristianarbe/gnad/config"
-	"github.com/cristianarbe/gnad/pkg/common"
 	"fmt"
-	"strings"
+	"github.com/cristianarbe/gnad/pkg/common"
+	"os"
 )
 
 func Main() {
-	packages,_ := common.FindInDir(config.GnadHome, "main")
+	common.Log("Initiating list.Main")
+	installedPackages,err := common.ListPackages()
+	common.Log("Got installed packages.")
 
-	for  _, packageName := range packages {
-		packageName = strings.Replace(packageName, config.GnadHome + "/","",-1)
-		packageName = strings.Replace(packageName, "/main","",-1)
-		fmt.Println(packageName)
+	if err != nil {
+		common.Log(err.Error())
+		os.Exit(1)
 	}
+
+	for _,c := range installedPackages {
+		fmt.Println(c)
+	}
+
+	return
 }

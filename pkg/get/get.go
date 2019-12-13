@@ -1,7 +1,6 @@
 package get
 
 import (
-	"errors"
 	"fmt"
 	"github.com/cristianarbe/gnad/pkg/common"
 	"os"
@@ -10,7 +9,7 @@ import (
 
 var log = common.Log
 
-func Main(url string) error {
+func Main(url string){
 	log("user chose get")
 
 	common.InitGnadHome()
@@ -19,18 +18,16 @@ func Main(url string) error {
 	log("the url is " + url)
 	splitUrl := common.SplitUrl(urlNoHttp)
 	fmt.Println(splitUrl)
-	absolute_path, err := common.CreateRecursiveDir(splitUrl)
-	if err != nil {
-		return errors.New("Can't create directories")
-	}
+	absolutePath := common.CreateRecursiveDir(splitUrl)
 
-	cmd := exec.Command("git", "clone", url, absolute_path)
+	cmd := exec.Command("git", "clone", url, absolutePath)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
-	err = cmd.Run()
+	err := cmd.Run()
 	if err != nil {
-		return errors.New("Git clone failed.")
+		common.Log(err.Error())
+		os.Exit(1)
 	}
 
-	return nil
+	return
 }

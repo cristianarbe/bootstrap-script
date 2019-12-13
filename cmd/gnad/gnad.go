@@ -3,9 +3,10 @@ package main
 import (
 	"github.com/cristianarbe/gnad/pkg/common"
 	"github.com/cristianarbe/gnad/pkg/get"
-	"github.com/cristianarbe/gnad/pkg/list"
+	"github.com/cristianarbe/gnad/pkg/set"
 	"os"
 	"strconv"
+    "github.com/cristianarbe/gnad/pkg/list"
 )
 
 var log = common.Log
@@ -35,17 +36,25 @@ func main() {
 
 	switch argsVerb {
 	case "get":
-		if numberOfArguments == 2 {
-			get.Main(argsObject)
-		} else {
+		if numberOfArguments != 2 {
 			log("Incorrect number of arguments.")
+			os.Exit(1)
 		}
+
+		get.Main(argsObject)
 	case "ls":
-		if numberOfArguments == 1 {
-			list.Main()
-		} else {
+		if numberOfArguments != 1 {
 			log("Incorrect number of arguments.")
 		}
+
+		list.Main()
+	case "set":
+		if numberOfArguments != 2 {
+			common.Log("Incorrect number of arguments.")
+			os.Exit(1)
+		}
+
+		set.Main(argsObject)
 	default:
 		log(argsVerb + " not recognized")
 	}
