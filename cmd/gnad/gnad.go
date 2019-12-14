@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/cristianarbe/gnad/config"
 	"github.com/cristianarbe/gnad/pkg/common"
 	"github.com/cristianarbe/gnad/pkg/get"
@@ -52,6 +53,8 @@ func main() {
 		}
 
 		set.Main(argsObject)
+	case "version":
+		fmt.Println(config.Version)
 	default:
 		common.Bye("Invalid operation \"" + argsVerb + "\"")
 	}

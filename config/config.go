@@ -7,6 +7,8 @@ import (
 
 const Debug = false
 
+const Version = "v0.1"
+
 func GnadHome() string {
 	user, err := user.Current()
 	homeDir := user.HomeDir + "/"
