@@ -4,9 +4,7 @@ import (
 	"fmt"
 	"github.com/cristianarbe/gnad/config"
 	"github.com/cristianarbe/gnad/pkg/common"
-	"github.com/cristianarbe/gnad/pkg/get"
-	"github.com/cristianarbe/gnad/pkg/list"
-	"github.com/cristianarbe/gnad/pkg/set"
+	"github.com/cristianarbe/gnad/pkg/scripts"
 	"log"
 	"os"
 	"strconv"
@@ -40,19 +38,25 @@ func main() {
 			log.Fatal("Incorrect number of arguments.")
 		}
 
-		get.Main(argsObject)
+		scripts.Get(argsObject)
 	case "ls":
 		if numberOfArguments != 1 {
 			common.Log("Incorrect number of arguments.")
 		}
 
-		list.Main()
+		scripts.List()
 	case "set":
 		if numberOfArguments != 2 {
-			log.Fatal("Incorrect number of arguments.")
+			common.Log("Incorrect number of arguments.")
 		}
 
-		set.Main(argsObject)
+		scripts.Set(argsObject)
+	case "rm":
+		if numberOfArguments != 2 {
+			common.Log("Incorrect number of arguments.")
+		}
+
+		scripts.Rm(argsObject)
 	case "version":
 		fmt.Println(config.Version)
 	default:
