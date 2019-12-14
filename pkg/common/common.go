@@ -1,8 +1,10 @@
 package common
 
 import (
+	"bufio"
 	"fmt"
 	"github.com/cristianarbe/gnad/config"
+	"io"
 	"log"
 	"os"
 	"path/filepath"
@@ -10,23 +12,22 @@ import (
 	"time"
 )
 
-func FileFolderExists(path string) (bool, error) {
+func FileFolderExists(path string) (bool) {
 	_, osStatError := os.Stat(path)
 
 	errorIsDoesntExist := os.IsNotExist(osStatError)
 
 	if errorIsDoesntExist {
-		return false, nil
+		return false
 	} else {
-		return true, nil
+		return true
 	}
 }
 
-func Bye(message string){
+func Bye(message string) {
 	fmt.Println(message)
 	os.Exit(1)
 }
-
 
 func Log(message string) {
 	if config.Debug {
@@ -47,11 +48,7 @@ func SplitUrl(url string) []string {
 }
 
 func InitGnadHome() {
-	exists, err := FileFolderExists(config.GnadHome())
-
-	if err != nil {
-		log.Fatal(err.Error())
-	}
+	exists := FileFolderExists(config.GnadHome())
 
 	if !exists {
 
@@ -127,4 +124,35 @@ func ListPackages() ([]string, error) {
 	}
 
 	return installedPackages, nil
+}
+
+func ReadInput(prompt string) string {
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print(prompt)
+	input, err := reader.ReadString('\n')
+
+	if err != nil {
+		log.Fatal("Failed to read input.")
+	}
+
+	input = strings.Replace(input, "\n", "", -1)
+	return input
+}
+
+func WriteFile(filename string, text string) error {
+	file, err := os.Create(filename)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer file.Close()
+
+	_, err = io.WriteString(file, text)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return file.Sync()
 }
