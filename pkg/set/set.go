@@ -25,14 +25,14 @@ func Main(pkg string) {
 	}
 
 	if len(runTarget) == 0 {
-		common.Log("I have found no matches.")
+		common.Log("No matches found.")
 		return
 	} else if len(runTarget) != 1 {
-		log.Fatal("I have found more than one match. Don't know what to do.")
+		common.Bye("Found more than one match. Try being more specific.")
 	}
 
 	common.Log("Running " + runTarget[0])
-	cmd := exec.Command("/bin/bash", config.GnadHome()+"/"+runTarget[0]+"/main")
+	cmd := exec.Command("/bin/bash", config.GnadHome()+runTarget[0]+"/main")
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	err = cmd.Run()
