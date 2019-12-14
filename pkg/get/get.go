@@ -1,7 +1,6 @@
 package get
 
 import (
-	"fmt"
 	"github.com/cristianarbe/gnad/pkg/common"
 	"log"
 	"os"
@@ -16,7 +15,6 @@ func Main(url string) {
 	urlNoHttp := common.RemoveHttp(url)
 	common.Log("the url is " + url)
 	splitUrl := common.SplitUrl(urlNoHttp)
-	fmt.Println(splitUrl)
 	absolutePath := common.CreateRecursiveDir(splitUrl)
 
 	cmd := exec.Command("git", "clone", url, absolutePath)
