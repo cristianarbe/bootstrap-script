@@ -74,7 +74,8 @@ func InitGnadHome() {
 func CreateRecursiveDir(urlPath []string) string {
 	absolutePath := config.GnadHome()
 	for _, c := range urlPath {
-		absolutePath = absolutePath + c
+		absolutePath = absolutePath + c + "/"
+		Log("current absolute path is " + absolutePath)
 		err := os.MkdirAll(absolutePath, 0700)
 		if err != nil {
 			log.Fatal(err.Error())
