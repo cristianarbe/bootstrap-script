@@ -3,6 +3,7 @@ package common
 import (
 	"fmt"
 	"github.com/cristianarbe/gnad/config"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -20,6 +21,12 @@ func FileFolderExists(path string) (bool, error) {
 		return true, nil
 	}
 }
+
+func Bye(message string){
+	fmt.Println(message)
+	os.Exit(1)
+}
+
 
 func Log(message string) {
 	if config.Debug {
@@ -39,41 +46,38 @@ func SplitUrl(url string) []string {
 	return out
 }
 
-func InitGnadHome(){
-	exists, err := FileFolderExists(config.GnadHome)
-	
+func InitGnadHome() {
+	exists, err := FileFolderExists(config.GnadHome())
+
 	if err != nil {
-		Log(err.Error())
-		os.Exit(1)
+		log.Fatal(err.Error())
 	}
 
 	if !exists {
 
-		Log(config.GnadHome + " does not exist, creating it")
+		Log(config.GnadHome() + " does not exist, creating it")
 
-		err := os.MkdirAll(config.GnadHome, 0700)
+		err := os.MkdirAll(config.GnadHome(), 0700)
 
 		if err != nil {
-			Log(err.Error())
-			os.Exit(1)
+			log.Fatal(err.Error())
 		}
 
 		Log("Directory created")
 	} else {
-		Log(config.GnadHome + " found")
+		Log(config.GnadHome() + " found")
 	}
 
 	return
 }
 
-func CreateRecursiveDir(urlPath []string) (string) {
-	absolutePath := config.GnadHome
+func CreateRecursiveDir(urlPath []string) string {
+	absolutePath := config.GnadHome()
 	for _, c := range urlPath {
-		absolutePath = absolutePath + "/" + c
+		absolutePath = absolutePath + c
 		err := os.MkdirAll(absolutePath, 0700)
 		if err != nil {
-			Log(err.Error())
-			os.Exit(1)
+			log.Fatal(err.Error())
 		} else {
 			Log("Created " + absolutePath)
 		}
@@ -91,12 +95,11 @@ func ListRecursive(inputPath string) ([]string, error) {
 	return files, nil
 }
 
-func FindInDir(inputPath string, searchTerm string) ([]string) {
+func FindInDir(inputPath string, searchTerm string) []string {
 	allFiles, err := ListRecursive(inputPath)
 
 	if err != nil {
-		Log(err.Error())
-		os.Exit(1)
+		log.Fatal(err.Error())
 	}
 
 	var filesMatching []string
@@ -112,12 +115,12 @@ func FindInDir(inputPath string, searchTerm string) ([]string) {
 }
 
 func ListPackages() ([]string, error) {
-	packages := FindInDir(config.GnadHome, "main")
+	packages := FindInDir(config.GnadHome(), "main")
 
 	var installedPackages []string
 
 	for _, packageName := range packages {
-		packageName = strings.Replace(packageName, config.GnadHome+"/", "", -1)
+		packageName = strings.Replace(packageName, config.GnadHome(), "", -1)
 		packageName = strings.Replace(packageName, "/main", "", -1)
 		installedPackages = append(installedPackages, packageName)
 	}

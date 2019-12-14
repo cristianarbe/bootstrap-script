@@ -3,19 +3,18 @@ package get
 import (
 	"fmt"
 	"github.com/cristianarbe/gnad/pkg/common"
+	"log"
 	"os"
 	"os/exec"
 )
 
-var log = common.Log
-
-func Main(url string){
-	log("user chose get")
+func Main(url string) {
+	common.Log("user chose get")
 
 	common.InitGnadHome()
 
 	urlNoHttp := common.RemoveHttp(url)
-	log("the url is " + url)
+	common.Log("the url is " + url)
 	splitUrl := common.SplitUrl(urlNoHttp)
 	fmt.Println(splitUrl)
 	absolutePath := common.CreateRecursiveDir(splitUrl)
@@ -25,8 +24,7 @@ func Main(url string){
 	cmd.Stderr = os.Stderr
 	err := cmd.Run()
 	if err != nil {
-		common.Log(err.Error())
-		os.Exit(1)
+		log.Fatal(err.Error())
 	}
 
 	return
